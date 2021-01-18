@@ -237,7 +237,7 @@ class ShowItemState extends State<ShowItem> {
                 Column(
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(left: 12.0, right: 14),
+                        padding: EdgeInsets.only(left: 12.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -249,52 +249,67 @@ class ShowItemState extends State<ShowItem> {
                           ],
                         )),
                     Padding(
-                      padding: const EdgeInsets.only(top: 18.0, bottom: 30),
+                      padding: const EdgeInsets.only(left: 12, top: 7, bottom: 10) ,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          MaterialButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
-                            child: Icon(
-                              Icons.ac_unit,
-                              size: 19,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 2),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              color: Colors.deepPurple[600],
+                              textColor: Colors.blue.shade200,
+                              child: Icon(
+                                Icons.ac_unit,
+                                size: 19,
+                              ),
+                              padding: EdgeInsets.only(
+                                  top: 4, bottom: 4, left: 9, right: 9),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14)),
                             ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
                           ),
-                          MaterialButton(
+                          RaisedButton(
                             onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
+                            color: Colors.deepPurple[600],
+                            textColor: Colors.green.shade200,
                             child: Icon(
                               Icons.local_florist_rounded,
                               size: 19,
                             ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
+                            padding: EdgeInsets.only(
+                                top: 4, bottom: 4, left: 9, right: 9),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14)),
                           ),
-                          MaterialButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
-                            child: Icon(
-                              Icons.wb_sunny_outlined,
-                              size: 19,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 2, left: 2),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              color: Colors.deepPurple[600],
+                              textColor: Colors.yellow.shade200,
+                              child: Icon(
+                                Icons.wb_sunny_outlined,
+                                size: 19,
+                              ),
+                              padding: EdgeInsets.only(
+                                  top: 4, bottom: 4, left: 9, right: 9),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14)),
                             ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
                           ),
-                          MaterialButton(
+                          RaisedButton(
                             onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
+                            color: Colors.deepPurple[600],
+                            textColor: Colors.white,
                             child: Icon(
                               Icons.flash_on_outlined,
                               size: 19,
                             ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
+                            padding: EdgeInsets.only(
+                                top: 4, bottom: 4, left: 9, right: 9),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14)),
                           ),
                         ],
                       ),
