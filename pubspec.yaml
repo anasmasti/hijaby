@@ -25,9 +25,14 @@ dependencies:
     sdk: flutter
   http:
   animated_text_kit: ^3.1.0
+  sqflite:
+  path:
+  path_provider: any
+  intl:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  connectivity:
 
 dev_dependencies:
   flutter_test:

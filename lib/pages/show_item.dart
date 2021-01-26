@@ -1,28 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:hijaby/model/post.dart';
+import 'package:hijaby/data/databaseLocale.dart';
+import 'package:hijaby/pages/components/alert_dialog.dart';
 import 'package:hijaby/pages/components/footer.dart';
 
 // ignore: must_be_immutable
 class ShowItem extends StatefulWidget {
+  ShowItem(
+      {this.index,
+      this.id,
+      this.title,
+      this.img,
+      this.desc,
+      // ignore: non_constant_identifier_names
+      this.short_title,
+      // ignore: non_constant_identifier_names
+      this.short_desc,
+      this.season,
+      this.createdAt,
+      this.nouveau});
+
   String id;
+  String img;
+  String index;
   String title;
-  String url;
-  ShowItem({this.id, this.title, this.url});
+  String desc;
+  // ignore: non_constant_identifier_names
+  String short_title;
+  // ignore: non_constant_identifier_names
+  String short_desc;
+  String season;
+  String createdAt;
+  int nouveau;
 
   @override
   State<StatefulWidget> createState() {
-    return new ShowItemState(id, title, url);
+    return new ShowItemState(index, id, title, img, desc, short_title,
+        short_desc, season, createdAt, nouveau);
   }
 }
 
 class ShowItemState extends State<ShowItem> {
-  final String id;
-  final String title;
-  final String url;
+  ShowItemState(
+      this.index,
+      this.id,
+      this.title,
+      this.img,
+      this.desc,
+      this.short_title,
+      this.short_desc,
+      this.season,
+      this.createdAt,
+      this.nouveau);
 
-  ShowItemState(this.id, this.title, this.url);
+  final String id;
+  final String img;
+  final String index;
+  final String title;
+  final String desc;
+  // ignore: non_constant_identifier_names
+  final String short_title;
+  // ignore: non_constant_identifier_names
+  final String short_desc;
+  final String season;
+  final String createdAt;
+  final int nouveau;
 
   @override
   Widget build(BuildContext context) {
+    final post = Post(
+      postId: '$id',
+      postTitle: "$title",
+      postImg: '$img',
+      postDesc: '$desc',
+      postShort_title: '$short_title',
+      postShort_desc: '$short_desc',
+      postSeason: '$season',
+      postCreatedAt: '$createdAt',
+      postNouveau: 1,
+    );
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
       body: Column(
@@ -31,7 +87,7 @@ class ShowItemState extends State<ShowItem> {
             alignment: Alignment.topCenter,
             children: [
               Hero(
-                tag: 'item_destination$id',
+                tag: 'item_destination$index',
                 child: ClipRRect(
                   borderRadius: new BorderRadius.only(
                     bottomLeft: const Radius.circular(40.0),
@@ -47,7 +103,7 @@ class ShowItemState extends State<ShowItem> {
                               offset: Offset(0, 5))
                         ]),
                     child: Image.network(
-                      '$url',
+                      '$img',
                       fit: BoxFit.cover,
                       height: 320,
                       width: MediaQuery.of(context).size.width,
@@ -68,8 +124,15 @@ class ShowItemState extends State<ShowItem> {
                       color: Colors.white,
                     ),
                     IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.info_outline_rounded),
+                      onPressed: () async {
+                        try {
+                           await DatabaseLocale.database.insertPost(post);
+                           return MyAlertDialog.displayAlertDialog(context, 'Done!', 'This item is on your favorites list now.', 0xff51ff87, 0xff353535);
+                        } catch (_) {
+                          return MyAlertDialog.displayAlertDialog(context, 'Oups!', 'This item is already on your favorites list.', 0xffff7272, 0xff353535);
+                        }
+                      },
+                      icon: Icon(Icons.favorite_outline),
                       color: Colors.white,
                     ),
                   ],
@@ -81,14 +144,14 @@ class ShowItemState extends State<ShowItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '$id' ?? '--',
+                      '$title' ?? '--',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                           color: Colors.white),
                     ),
                     Text(
-                      'Summer is one of the four seasons of the year, in the temperate and polar regions of the planet. Summer follows spring and precedes fall.',
+                      '$short_desc',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 15,
@@ -122,7 +185,7 @@ class ShowItemState extends State<ShowItem> {
                     children: [
                       InteractiveViewer(
                         child: Image.network(
-                          '$url',
+                          '$img',
                           fit: BoxFit.cover,
                           height: 320,
                           width: MediaQuery.of(context).size.width,
@@ -249,7 +312,8 @@ class ShowItemState extends State<ShowItem> {
                           ],
                         )),
                     Padding(
-                      padding: const EdgeInsets.only(left: 12, top: 7, bottom: 10) ,
+                      padding:
+                          const EdgeInsets.only(left: 12, top: 7, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ShowSeason extends StatefulWidget {
+  ShowSeason({this.index,this.name,this.desc,this.img});
+
+  String desc;
+  String img;
+  String index;
+  String name;
+
   @override
   State<StatefulWidget> createState() {
-    return new ShowSeasonState();
+    return new ShowSeasonState(index,name,desc,img);
   }
 }
 
 class ShowSeasonState extends State<ShowSeason> {
+  ShowSeasonState(this.index,this.name,this.desc,this.img);
+
+  final String desc;
+  final String img;
+  final String index;
+  final String name;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +33,7 @@ class ShowSeasonState extends State<ShowSeason> {
             alignment: Alignment.topCenter,
             children: [
               Hero(
-                tag: 'des',
+                tag: 'des$index',
                 child: ClipRRect(
                   borderRadius: new BorderRadius.only(
                     bottomLeft: const Radius.circular(40.0),
@@ -34,7 +49,7 @@ class ShowSeasonState extends State<ShowSeason> {
                               offset: Offset(0, 5))
                         ]),
                     child: Image.network(
-                      'https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                      '$img',
                       fit: BoxFit.cover,
                       height: 320,
                       width: MediaQuery.of(context).size.width,
@@ -68,14 +83,14 @@ class ShowSeasonState extends State<ShowSeason> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Summer',
+                      name,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                           color: Colors.white),
                     ),
                     Text(
-                      'Summer is one of the four seasons of the year, in the temperate and polar regions of the planet. Summer follows spring and precedes fall.',
+                      desc,
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 15,
