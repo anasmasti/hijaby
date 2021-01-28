@@ -8,8 +8,11 @@ class CheckConnexion {
       var msg;
       if (result == ConnectivityResult.none) {
         msg = MyAlertDialog.displayAlertDialog(
-            context, 'No Internet Connection :/', 'You have to connect to the internet to continue to hang out on the application.', 0xffff7272, 0xFF5C5C5C);
-      } 
+            context,
+            'No Internet Connection :/',
+            'You have to connect to the internet to continue to hang out on the application.',
+            0xFFFF5353);
+      }
       return msg;
     });
   }

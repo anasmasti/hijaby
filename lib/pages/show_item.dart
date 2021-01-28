@@ -3,6 +3,8 @@ import 'package:hijaby/model/post.dart';
 import 'package:hijaby/data/databaseLocale.dart';
 import 'package:hijaby/pages/components/alert_dialog.dart';
 import 'package:hijaby/pages/components/footer.dart';
+import 'package:hijaby/pages/functions/convertdate.dart';
+import 'package:hijaby/pages/functions/var_to_text.dart';
 
 // ignore: must_be_immutable
 class ShowItem extends StatefulWidget {
@@ -31,7 +33,7 @@ class ShowItem extends StatefulWidget {
   String short_desc;
   String season;
   String createdAt;
-  int nouveau;
+  bool nouveau;
 
   @override
   State<StatefulWidget> createState() {
@@ -64,7 +66,8 @@ class ShowItemState extends State<ShowItem> {
   final String short_desc;
   final String season;
   final String createdAt;
-  final int nouveau;
+  final bool nouveau;
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +80,7 @@ class ShowItemState extends State<ShowItem> {
       postShort_desc: '$short_desc',
       postSeason: '$season',
       postCreatedAt: '$createdAt',
-      postNouveau: 1,
+      postNouveau: nouveau,
     );
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
@@ -105,7 +108,7 @@ class ShowItemState extends State<ShowItem> {
                     child: Image.network(
                       '$img',
                       fit: BoxFit.cover,
-                      height: 320,
+                      height: 290,
                       width: MediaQuery.of(context).size.width,
                       color: Colors.black.withOpacity(.4),
                       colorBlendMode: BlendMode.multiply,
@@ -126,10 +129,18 @@ class ShowItemState extends State<ShowItem> {
                     IconButton(
                       onPressed: () async {
                         try {
-                           await DatabaseLocale.database.insertPost(post);
-                           return MyAlertDialog.displayAlertDialog(context, 'Done!', 'This item is on your favorites list now.', 0xff51ff87, 0xff353535);
+                          await DatabaseLocale.database.insertPost(post);
+                          return MyAlertDialog.displayAlertDialog(
+                              context,
+                              'Done!',
+                              'This item is on your favorites list now.',
+                              0xFF2EE267);
                         } catch (_) {
-                          return MyAlertDialog.displayAlertDialog(context, 'Oups!', 'This item is already on your favorites list.', 0xffff7272, 0xff353535);
+                          return MyAlertDialog.displayAlertDialog(
+                              context,
+                              'Oups!',
+                              'This item is already on your favorites list.',
+                              0xFFFF5353);
                         }
                       },
                       icon: Icon(Icons.favorite_outline),
@@ -139,7 +150,7 @@ class ShowItemState extends State<ShowItem> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 140, left: 20, right: 14),
+                padding: EdgeInsets.only(top: 140, left: 20, right: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -148,14 +159,47 @@ class ShowItemState extends State<ShowItem> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
+                           fontFamily: 'Roboto',
                           color: Colors.white),
                     ),
                     Text(
                       '$short_desc',
                       style: TextStyle(
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.normal,
                           fontSize: 15,
-                          color: Colors.white70),
+                           fontFamily: 'Roboto',
+                          color: Colors.white),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 22.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Published on : ${ConvertToDate.convertToDate(createdAt)}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontFamily: 'Roboto',
+                                fontSize: 11,
+                                color: Colors.white),
+                          ),
+                           Container(
+                             padding: EdgeInsets.only(top:8, bottom: 8, left: 24, right: 24),
+                              decoration: BoxDecoration(
+                                color: Colors.green[300],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                             child: Text(
+                             '${boolNewToText(nouveau)}' ,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Roboto',
+                                  fontSize: 16,
+                                  color: Colors.white),
+                          ),
+                           )
+                        ],
+                      ),
                     )
                   ],
                 ),

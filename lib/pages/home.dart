@@ -46,128 +46,32 @@ class HomeState extends State<Home> {
       body: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
-                color: Colors.deepPurple[200],
-                borderRadius: BorderRadius.circular(34),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey[350],
-                      blurRadius: 18,
-                      offset: Offset(0, .7))
-                ]),
-            padding: const EdgeInsets.only(top: 39.0, bottom: 20),
+            padding: const EdgeInsets.only(top: 37.0, bottom: 10),
             child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 14),
-                    child: Text(
-                      'Quick access to the most used pages',
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.only(top: 7, left: 11, right: 11),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/favorite');
-                      },
-                      color: Colors.yellow[600],
-                      textColor: Colors.black87,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.favorite,
-                            size: 19,
-                          ),
-                          Text(
-                            'Favorite',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 10),
-                          )
-                        ],
-                      ),
-                      padding:
-                          EdgeInsets.only(top: 4, bottom: 4, left: 9, right: 9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14)),
+                    Text(
+                      'Hijaby',
+                      style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w900,
+                          fontSize: 35),
                     ),
                     RaisedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/favorite');
                       },
-                      color: Colors.deepPurple[50],
-                      textColor: Colors.deepPurple[400],
+                      color: Colors.deepPurple[200],
+                      textColor: Colors.white,
                       child: Column(
                         children: [
                           Icon(
-                            Icons.new_releases,
-                            size: 19,
+                            Icons.favorite_outline,
+                            size: 29,
                           ),
-                          Text(
-                            'New',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 10),
-                          )
-                        ],
-                      ),
-                      padding:
-                          EdgeInsets.only(top: 4, bottom: 4, left: 9, right: 9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14)),
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/favorite');
-                      },
-                      color: Colors.deepPurple[50],
-                      textColor: Colors.deepPurple[400],
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.ac_unit,
-                            size: 19,
-                          ),
-                          Text(
-                            'Winter',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 10),
-                          )
-                        ],
-                      ),
-                      padding:
-                          EdgeInsets.only(top: 4, bottom: 4, left: 9, right: 9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14)),
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/favorite');
-                      },
-                      color: Colors.deepPurple[50],
-                      textColor: Colors.deepPurple[400],
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.wb_sunny,
-                            size: 19,
-                          ),
-                          Text(
-                            'Summer',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 10),
-                          )
                         ],
                       ),
                       padding:
@@ -236,7 +140,7 @@ class HomeState extends State<Home> {
                                                   .toString(),
                                               createdAt: _posts[index]
                                                   ['createdAt'],
-                                              nouveau: _posts[index]['nouveau'],
+                                              nouveau: _posts[index]['new'],
                                             )));
                               },
                               child: Stack(
