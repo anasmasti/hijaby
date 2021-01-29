@@ -29,6 +29,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
   @override
   void initState() {
     super.initState();
+    
     getFavoriteItems();
   }
 
@@ -118,7 +119,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                       season:
                                           _posts[index].postSeason.toString(),
                                       createdAt: _posts[index].postCreatedAt,
-                                      nouveau: _posts[index].postNouveau)));
+                                      nouveau: true)));
                         },
                         child: Row(
                           children: [
@@ -200,6 +201,8 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                       await DatabaseLocale
                                                           .database
                                                           .deletePost(myId);
+                                                          getFavoriteItems();
+                                                          
                                                     },
                                                     color: Colors.white,
                                                     textColor: Colors.red[300],

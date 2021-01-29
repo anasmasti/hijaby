@@ -29,9 +29,10 @@ class DatabaseLocale {
 
   _createDb(Database db, int newVersion) async {
     String sql =
-        "CREATE TABLE posts( id VARCHAR(50) PRIMARY KEY, title VARCHAR(50), img VARCHAR(200), createdAt VARCHAR(50), short_title VARCHAR(100),short_desc VARCHAR(100),season VARCHAR(50), desc VARCHAR(500), nouveau BOOL)";
+        "CREATE TABLE posts( id VARCHAR(50) PRIMARY KEY, title VARCHAR(50), img VARCHAR(200), createdAt VARCHAR(50), short_title VARCHAR(100),short_desc VARCHAR(100),season VARCHAR(50), desc VARCHAR(500), nouveau INT)";
     await db.execute(sql);
   }
+
   // _updateDb(Database db, int oldVersion, int newVersion) async {
   //   if (oldVersion < newVersion) {
   //   //  await db.execute("ALTER TABLE posts ALTER COLUMN createdAt DATETIME;");

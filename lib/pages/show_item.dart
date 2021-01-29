@@ -68,7 +68,6 @@ class ShowItemState extends State<ShowItem> {
   final String createdAt;
   final bool nouveau;
 
-
   @override
   Widget build(BuildContext context) {
     final post = Post(
@@ -80,7 +79,7 @@ class ShowItemState extends State<ShowItem> {
       postShort_desc: '$short_desc',
       postSeason: '$season',
       postCreatedAt: '$createdAt',
-      postNouveau: nouveau,
+      postNouveau: 1,
     );
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
@@ -150,16 +149,33 @@ class ShowItemState extends State<ShowItem> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 140, left: 20, right: 24),
+                padding: EdgeInsets.only(top: 115, left: 20, right: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 6),
+                      padding: EdgeInsets.only(
+                          top: 3, bottom: 3, left: 24, right: 24),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[300],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        'Winter',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontFamily: 'Roboto',
+                            fontSize: 14,
+                            color: Colors.white),
+                      ),
+                    ),
                     Text(
                       '$title' ?? '--',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
-                           fontFamily: 'Roboto',
+                          fontFamily: 'Roboto',
                           color: Colors.white),
                     ),
                     Text(
@@ -167,7 +183,7 @@ class ShowItemState extends State<ShowItem> {
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 15,
-                           fontFamily: 'Roboto',
+                          fontFamily: 'Roboto',
                           color: Colors.white),
                     ),
                     Padding(
@@ -183,21 +199,22 @@ class ShowItemState extends State<ShowItem> {
                                 fontSize: 11,
                                 color: Colors.white),
                           ),
-                           Container(
-                             padding: EdgeInsets.only(top:8, bottom: 8, left: 24, right: 24),
-                              decoration: BoxDecoration(
-                                color: Colors.green[300],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                             child: Text(
-                             '${boolNewToText(nouveau)}' ,
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: 3, bottom: 3, left: 24, right: 24),
+                            decoration: BoxDecoration(
+                              color: Colors.green[300],
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              '${boolNewToText(nouveau)}',
                               style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontFamily: 'Roboto',
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   color: Colors.white),
-                          ),
-                           )
+                            ),
+                          )
                         ],
                       ),
                     )

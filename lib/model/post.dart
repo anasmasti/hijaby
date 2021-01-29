@@ -21,7 +21,7 @@ class Post {
   final String postShort_desc;
   final String postSeason;
   final String postCreatedAt;
-  final bool postNouveau;
+  final int postNouveau;
 
   Post({
     this.postId,
