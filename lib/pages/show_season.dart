@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hijaby/data/fetchData.dart';
+import 'package:hijaby/pages/components/footer.dart';
+import 'package:hijaby/pages/functions/convertdate.dart';
+import 'package:hijaby/pages/functions/var_to_text.dart';
+import 'package:hijaby/pages/show_item.dart';
 
 // ignore: must_be_immutable
 class ShowSeason extends StatefulWidget {
-  ShowSeason({this.index,this.name,this.desc,this.img});
-
+  ShowSeason({this.index, this.name, this.desc, this.img, this.id});
+  String id;
   String desc;
   String img;
   String index;
@@ -11,17 +16,29 @@ class ShowSeason extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new ShowSeasonState(index,name,desc,img);
+    return new ShowSeasonState(index, name, desc, img, id);
   }
 }
 
 class ShowSeasonState extends State<ShowSeason> {
-  ShowSeasonState(this.index,this.name,this.desc,this.img);
-
+  ShowSeasonState(this.index, this.name, this.desc, this.img, this.id);
+  final String id;
   final String desc;
   final String img;
   final String index;
   final String name;
+
+  List posts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    FetchData().getPostsBySeasons(id).then((value) {
+      setState(() {
+        posts.addAll(value);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +100,7 @@ class ShowSeasonState extends State<ShowSeason> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
+                      '$name',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
@@ -102,47 +119,47 @@ class ShowSeasonState extends State<ShowSeason> {
             ],
           ),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.only(top: 14),
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(left: 12.0, right: 14),
+            child: ListView.builder(
+                padding: EdgeInsets.only(top: 14),
+                scrollDirection: Axis.vertical,
+                itemCount: posts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ShowItem(
+                                        index: index.toString(),
+                                        title: posts[index]["title"].toString(),
+                                        img: posts[index]["img"].toString(),
+                                        id: posts[index]["_id"].toString(),
+                                        desc: posts[index]["desc"].toString(),
+                                        short_title: posts[index]["short_title"]
+                                            .toString(),
+                                        short_desc: posts[index]["short_desc"]
+                                            .toString(),
+                                        season:
+                                            posts[index]['season'].toString(),
+                                        createdAt: posts[index]["createdAt"],
+                                        nouveau: posts[index]["nouveau"],
+                                      )));
+                        },
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Summer recommend',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
-                            ),
-                            Text(
-                              'see all',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                  color: Colors.deepPurple.shade400),
-                            )
-                          ],
-                        )),
-                    Container(
-                      height: 230,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              margin: EdgeInsets.all(10),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 2,
-                                    child: Container(
-                                      width: 150,
-                                      height: 80,
+                            Stack(
+                              alignment: Alignment.topLeft,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 155.0, top: 15),
+                                  child: Container(
+                                      width: 220,
+                                      height: 140,
                                       padding:
-                                          EdgeInsets.only(top: 28, left: 10),
+                                          EdgeInsets.only(top: 18, left: 10),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -151,234 +168,95 @@ class ShowSeasonState extends State<ShowSeason> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            'Summer',
-                                            textDirection: TextDirection.ltr,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Discover the summer collection',
-                                            textDirection: TextDirection.ltr,
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black45,
-                                                fontWeight: FontWeight.normal),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  seasonTextToWigdet(
+                                                      posts[index]['season']
+                                                          ["name"],
+                                                      12,
+                                                      3,
+                                                      9,
+                                                      0,
+                                                      4),
+                                                  Text(
+                                                    '${posts[index]['title']}',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w900),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.only(top: 6),
+                                                    width: 120,
+                                                    child: Text(
+                                                        '${posts[index]["short_desc"]}',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black38,
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal)),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 15.0),
+                                                    child: Text(
+                                                      'Published on : ${ConvertToDate.convertToDate(posts[index]["createdAt"])}',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontFamily: 'Roboto',
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w200),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           )
                                         ],
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Hero(
+                                    tag: 'item_destination$index',
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(24),
+                                      child: Image.network(
+                                        '${posts[index]["img"]}',
+                                        fit: BoxFit.cover,
+                                        height: 150,
+                                        width: 150,
+                                        color: Colors.black.withOpacity(.2),
+                                        colorBlendMode: BlendMode.multiply,
                                       ),
                                     ),
                                   ),
-                                  Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(24),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.black26,
-                                                    blurRadius: 5,
-                                                    offset: Offset(0, 5))
-                                              ]),
-                                          child: Image.network(
-                                            'https://images.unsplash.com/photo-1597240542691-2f5dd7834da0?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80',
-                                            fit: BoxFit.cover,
-                                            height: 150,
-                                            width: 150,
-                                            color: Colors.black.withOpacity(.2),
-                                            colorBlendMode: BlendMode.multiply,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Column(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(left: 12.0, right: 14),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'New summer collection',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
-                            ),
-                            Text(
-                              'see all',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                  color: Colors.deepPurple.shade400),
+                                ),
+                              ],
                             )
                           ],
-                        )),
-                    Container(
-                      height: 230,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              margin: EdgeInsets.all(10),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 2,
-                                    child: Container(
-                                      width: 150,
-                                      height: 80,
-                                      padding:
-                                          EdgeInsets.only(top: 28, left: 10),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Summer',
-                                            textDirection: TextDirection.ltr,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Discover the summer collection',
-                                            textDirection: TextDirection.ltr,
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black45,
-                                                fontWeight: FontWeight.normal),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(24),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.black26,
-                                                    blurRadius: 5,
-                                                    offset: Offset(0, 5))
-                                              ]),
-                                          child: Image.network(
-                                            'https://images.unsplash.com/photo-1597240542691-2f5dd7834da0?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80',
-                                            fit: BoxFit.cover,
-                                            height: 150,
-                                            width: 150,
-                                            color: Colors.black.withOpacity(.2),
-                                            colorBlendMode: BlendMode.multiply,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Column(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(left: 12.0, right: 14),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Other season',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
-                            ),
-                          ],
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0, bottom: 30),
-                      child: Row(
-                        children: [
-                          MaterialButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
-                            child: Icon(
-                              Icons.ac_unit,
-                              size: 19,
-                            ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
-                          ),
-                          MaterialButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
-                            child: Icon(
-                              Icons.local_florist_rounded,
-                              size: 19,
-                            ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
-                          ),
-                          MaterialButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
-                            child: Icon(
-                              Icons.wb_sunny_outlined,
-                              size: 19,
-                            ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
-                          ),
-                          MaterialButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple.shade100,
-                            textColor: Colors.deepPurple.shade400,
-                            child: Icon(
-                              Icons.flash_on_outlined,
-                              size: 19,
-                            ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                    ],
+                  );
+                }),
           ),
+          Footer(),
         ],
       ),
     );

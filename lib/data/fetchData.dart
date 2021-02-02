@@ -36,4 +36,52 @@ class FetchData {
       print('connexion error');
     }
   }
+
+  Future getPostsBySeasons(String idSeason) async {
+    var seasons = [];
+    try {
+      http.Response response = await http.get('$url/posts/byseason/$idSeason');
+      if (response.statusCode == 200) {
+        var myseasons = json.decode(response.body.toString());
+        for (var myseason in myseasons) {
+          seasons.add(myseason);
+        }
+      }
+      return seasons;
+    } catch (_) {
+      print('connexion error');
+    }
+  }
+
+  Future getNewPosts() async {
+    var posts = [];
+    try {
+      http.Response response = await http.get('$url/posts/new/post');
+      if (response.statusCode == 200) {
+        var myposts = json.decode(response.body.toString());
+        for (var mypost in myposts) {
+          posts.add(mypost);
+        }
+      }
+      return posts;
+    } catch (_) {
+      print('connexion error');
+    }
+  }
+
+  Future get10Posts() async {
+    var posts = [];
+    try {
+      http.Response response = await http.get('$url/posts/take/post');
+      if (response.statusCode == 200) {
+        var myposts = json.decode(response.body.toString());
+        for (var mypost in myposts) {
+          posts.add(mypost);
+        }
+      }
+      return posts;
+    } catch (_) {
+      print('connexion error');
+    }
+  }
 }

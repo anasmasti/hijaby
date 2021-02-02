@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:hijaby/data/fetchData.dart';
 import 'package:hijaby/pages/functions/check_connexion.dart';
 import 'package:hijaby/pages/functions/var_to_text.dart';
+import 'package:hijaby/pages/show_all_items.dart';
 import 'package:hijaby/pages/show_item.dart';
 import 'package:hijaby/pages/components/footer.dart';
 import 'package:hijaby/pages/show_season.dart';
@@ -15,12 +17,42 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   List _posts = [];
+  // ignore: non_constant_identifier_names
+  List _10Posts = [];
+  List _newPosts = [];
   List _seasons = [];
 
   @override
   void initState() {
     super.initState();
+
+   
+
     CheckConnexion.checkConnexion(context);
+
+    FetchData().getPosts().then((value) {
+      setState(() {
+        _posts.addAll(value);
+      });
+    });
+
+    FetchData().getSeasons().then((value) {
+      setState(() {
+        _seasons.addAll(value);
+      });
+    });
+
+    FetchData().getNewPosts().then((value) {
+      setState(() {
+        _newPosts.addAll(value);
+      });
+    });
+
+    FetchData().get10Posts().then((value) {
+      setState(() {
+        _10Posts.addAll(value);
+      });
+    });
   }
 
   @override
@@ -31,17 +63,6 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    FetchData().getPosts().then((value) {
-      setState(() {
-        _posts.addAll(value);
-      });
-    });
-    FetchData().getSeasons().then((value) {
-      setState(() {
-        _seasons.addAll(value);
-      });
-    });
-
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
       body: Column(
@@ -90,7 +111,7 @@ class HomeState extends State<Home> {
               Column(
                 children: [
                   Padding(
-                      padding: EdgeInsets.only(left: 12.0, right: 14),
+                      padding: EdgeInsets.only(left: 12.0, right: 2),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -99,12 +120,22 @@ class HomeState extends State<Home> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17),
                           ),
-                          Text(
-                            'see all',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                color: Colors.deepPurple.shade400),
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ShowAllItems(
+                                            posts: _posts,
+                                          )));
+                            },
+                            child: Text(
+                              'see all',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  color: Colors.deepPurple.shade400),
+                            ),
                           )
                         ],
                       )),
@@ -112,15 +143,15 @@ class HomeState extends State<Home> {
                     height: 235,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: _posts.length,
+                        itemCount: _10Posts.length,
                         // ignore: missing_return
                         itemBuilder: (BuildContext context, int index) {
-                          if (_posts.length == 0 || _posts.length < 0) {
+                          if (_10Posts.length == 0 || _10Posts.length < 0) {
                             return Center(
                                 child: CircularProgressIndicator(
                               backgroundColor: Colors.deepPurple[200],
                             ));
-                          } else if (_posts.length > 0) {
+                          } else if (_10Posts.length > 0) {
                             return Container(
                               margin: EdgeInsets.all(10),
                               child: GestureDetector(
@@ -130,25 +161,26 @@ class HomeState extends State<Home> {
                                       MaterialPageRoute(
                                           builder: (context) => ShowItem(
                                                 index: index.toString(),
-                                                title: _posts[index]['title']
+                                                title: _10Posts[index]['title']
                                                     .toString(),
-                                                img: _posts[index]['img']
+                                                img: _10Posts[index]['img']
                                                     .toString(),
-                                                id: _posts[index]['_id']
+                                                id: _10Posts[index]['_id']
                                                     .toString(),
-                                                desc: _posts[index]['desc']
+                                                desc: _10Posts[index]['desc']
                                                     .toString(),
-                                                short_title: _posts[index]
+                                                short_title: _10Posts[index]
                                                         ['short_title']
                                                     .toString(),
-                                                short_desc: _posts[index]
+                                                short_desc: _10Posts[index]
                                                         ['short_desc']
                                                     .toString(),
-                                                season: _posts[index]['season']
+                                                season: _10Posts[index]
+                                                        ['season']['name']
                                                     .toString(),
-                                                createdAt: _posts[index]
+                                                createdAt: _10Posts[index]
                                                     ['createdAt'],
-                                                nouveau: _posts[index]['new'],
+                                                nouveau: _10Posts[index]['new'],
                                               )));
                                 },
                                 child: Stack(
@@ -169,7 +201,7 @@ class HomeState extends State<Home> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${_posts[index]['title']}',
+                                              '${_10Posts[index]['title']}',
                                               textDirection: TextDirection.ltr,
                                               style: TextStyle(
                                                 fontFamily: 'Roboto',
@@ -177,7 +209,7 @@ class HomeState extends State<Home> {
                                               ),
                                             ),
                                             Text(
-                                              '${_posts[index]['short_title']}',
+                                              '${_10Posts[index]['short_title']}',
                                               textDirection: TextDirection.ltr,
                                               style: TextStyle(
                                                   fontSize: 9,
@@ -206,7 +238,7 @@ class HomeState extends State<Home> {
                                                               20),
                                                     ),
                                                     child: Text(
-                                                      '${boolNewToText(_posts[index]['new'])}',
+                                                      '${boolNewToText(_10Posts[index]['new'])}',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w900,
@@ -215,28 +247,14 @@ class HomeState extends State<Home> {
                                                           color: Colors.white),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 3,
-                                                        bottom: 3,
-                                                        left: 12,
-                                                        right: 12),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.blue[300],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                    ),
-                                                    child: Text(
-                                                      'Winter',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w900,
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 9,
-                                                          color: Colors.white),
-                                                    ),
-                                                  )
+                                                  seasonTextToWigdet(
+                                                      _10Posts[index]['season']
+                                                          ["name"],
+                                                      12,
+                                                      3,
+                                                      9,
+                                                      0,
+                                                      0),
                                                 ],
                                               ),
                                             ),
@@ -263,7 +281,7 @@ class HomeState extends State<Home> {
                                                         offset: Offset(0, 5))
                                                   ]),
                                               child: Image.network(
-                                                '${_posts[index]['img']}',
+                                                '${_10Posts[index]['img']}',
                                                 fit: BoxFit.cover,
                                                 height: 150,
                                                 width: 150,
@@ -324,6 +342,7 @@ class HomeState extends State<Home> {
                                               .toString(),
                                           img:
                                               _seasons[index]['img'].toString(),
+                                          id: _seasons[index]['_id'].toString(),
                                         )));
                           },
                           child: Container(
@@ -383,88 +402,167 @@ class HomeState extends State<Home> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17),
                           ),
-                          Text(
-                            'see all',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                color: Colors.deepPurple.shade400),
-                          )
                         ],
                       )),
                   Container(
                     height: 230,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 5,
+                        itemCount: _newPosts.length,
+                        // ignore: missing_return
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            margin: EdgeInsets.all(10),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 2,
-                                  child: Container(
-                                    width: 150,
-                                    height: 80,
-                                    padding: EdgeInsets.only(top: 28, left: 10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Summer',
-                                          textDirection: TextDirection.ltr,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Discover the summer collection',
-                                          textDirection: TextDirection.ltr,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black45,
-                                              fontWeight: FontWeight.normal),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Stack(
-                                  alignment: Alignment.topCenter,
+                          if (_newPosts.length == 0 || _newPosts.length < 0) {
+                            return Center(
+                                child: CircularProgressIndicator(
+                              backgroundColor: Colors.deepPurple[200],
+                            ));
+                          } else if (_newPosts.length > 0) {
+                            return Container(
+                              margin: EdgeInsets.all(10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ShowItem(
+                                                index: index.toString(),
+                                                title: _newPosts[index]['title']
+                                                    .toString(),
+                                                img: _newPosts[index]['img']
+                                                    .toString(),
+                                                id: _newPosts[index]['_id']
+                                                    .toString(),
+                                                desc: _newPosts[index]['desc']
+                                                    .toString(),
+                                                short_title: _newPosts[index]
+                                                        ['short_title']
+                                                    .toString(),
+                                                short_desc: _newPosts[index]
+                                                        ['short_desc']
+                                                    .toString(),
+                                                season: _newPosts[index]
+                                                        ['season']['name']
+                                                    .toString(),
+                                                createdAt: _newPosts[index]
+                                                    ['createdAt'],
+                                                nouveau: _newPosts[index]
+                                                    ['new'],
+                                              )));
+                                },
+                                child: Stack(
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(24),
+                                    Positioned(
+                                      bottom: 2,
                                       child: Container(
+                                        width: 150,
+                                        height: 80,
+                                        padding:
+                                            EdgeInsets.only(top: 23, left: 10),
                                         decoration: BoxDecoration(
+                                            color: Colors.white,
                                             borderRadius:
-                                                BorderRadius.circular(24),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.black26,
-                                                  blurRadius: 5,
-                                                  offset: Offset(0, 5))
-                                            ]),
-                                        child: Image.network(
-                                          'https://images.unsplash.com/photo-1597240542691-2f5dd7834da0?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80',
-                                          fit: BoxFit.cover,
-                                          height: 150,
-                                          width: 150,
-                                          color: Colors.black.withOpacity(.2),
-                                          colorBlendMode: BlendMode.multiply,
+                                                BorderRadius.circular(12)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${_newPosts[index]['title']}',
+                                              textDirection: TextDirection.ltr,
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              '${_newPosts[index]['short_title']}',
+                                              textDirection: TextDirection.ltr,
+                                              style: TextStyle(
+                                                  fontSize: 9,
+                                                  fontFamily: 'Roboto',
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.only(
+                                                        top: 3,
+                                                        bottom: 3,
+                                                        left: 12,
+                                                        right: 12),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.green[300],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                    ),
+                                                    child: Text(
+                                                      '${boolNewToText(_newPosts[index]['new'])}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontFamily: 'Roboto',
+                                                          fontSize: 9,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                  seasonTextToWigdet(
+                                                      _newPosts[index]['season']
+                                                          ["name"],
+                                                      12,
+                                                      3,
+                                                      9,
+                                                      0,
+                                                      0),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
+                                    Stack(
+                                      alignment: Alignment.topCenter,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(24),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                      color: Colors.black26,
+                                                      blurRadius: 5,
+                                                      offset: Offset(0, 5))
+                                                ]),
+                                            child: Image.network(
+                                              '${_newPosts[index]['img']}',
+                                              fit: BoxFit.cover,
+                                              height: 150,
+                                              width: 150,
+                                              color:
+                                                  Colors.black.withOpacity(.2),
+                                              colorBlendMode:
+                                                  BlendMode.multiply,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   ],
-                                )
-                              ],
-                            ),
-                          );
+                                ),
+                              ),
+                            );
+                          }
                         }),
                   )
                 ],

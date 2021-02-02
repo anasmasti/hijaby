@@ -11,7 +11,7 @@ class CheckConnexion {
             context,
             'No Internet Connection :/',
             'You have to connect to the internet to continue to hang out on the application.',
-            0xFFFF5353);
+            0xFFE57373);
       }
       return msg;
     });

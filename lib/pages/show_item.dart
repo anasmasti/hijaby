@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hijaby/data/fetchData.dart';
 import 'package:hijaby/model/post.dart';
 import 'package:hijaby/data/databaseLocale.dart';
 import 'package:hijaby/pages/components/alert_dialog.dart';
@@ -67,6 +68,18 @@ class ShowItemState extends State<ShowItem> {
   final String season;
   final String createdAt;
   final bool nouveau;
+  // ignore: non_constant_identifier_names
+  List _10Posts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    FetchData().get10Posts().then((value) {
+      setState(() {
+        _10Posts.addAll(value);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,13 +146,13 @@ class ShowItemState extends State<ShowItem> {
                               context,
                               'Done!',
                               'This item is on your favorites list now.',
-                              0xFF2EE267);
+                              0xFF81C784);
                         } catch (_) {
                           return MyAlertDialog.displayAlertDialog(
                               context,
                               'Oups!',
                               'This item is already on your favorites list.',
-                              0xFFFF5353);
+                              0xFFE57373);
                         }
                       },
                       icon: Icon(Icons.favorite_outline),
@@ -153,23 +166,7 @@ class ShowItemState extends State<ShowItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 6),
-                      padding: EdgeInsets.only(
-                          top: 3, bottom: 3, left: 24, right: 24),
-                      decoration: BoxDecoration(
-                        color: Colors.blue[300],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        'Winter',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontFamily: 'Roboto',
-                            fontSize: 14,
-                            color: Colors.white),
-                      ),
-                    ),
+                   seasonTextToWigdet(season,14,6,14,0,6),
                     Text(
                       '$title' ?? '--',
                       style: TextStyle(
@@ -255,6 +252,31 @@ class ShowItemState extends State<ShowItem> {
                     ],
                   ),
                 ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 12.0, top: 40, bottom: 44),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        short_title,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontFamily: 'Roboto',
+                            fontSize: 24,
+                            color: Colors.black87),
+                      ),
+                      Text(
+                        desc,
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto',
+                            fontSize: 17,
+                            color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                ),
                 Column(
                   children: [
                     Padding(
@@ -264,7 +286,7 @@ class ShowItemState extends State<ShowItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Recommend',
+                              'For you',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 17),
                             ),
@@ -278,79 +300,163 @@ class ShowItemState extends State<ShowItem> {
                           ],
                         )),
                     Container(
-                      height: 230,
+                      height: 235,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 5,
+                          itemCount: _10Posts.length,
+                          // ignore: missing_return
                           itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              margin: EdgeInsets.all(10),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 2,
-                                    child: Container(
-                                      width: 150,
-                                      height: 80,
-                                      padding:
-                                          EdgeInsets.only(top: 28, left: 10),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Recommend',
-                                            textDirection: TextDirection.ltr,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Discover the summer collection',
-                                            textDirection: TextDirection.ltr,
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black45,
-                                                fontWeight: FontWeight.normal),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Stack(
-                                    alignment: Alignment.topCenter,
+                            if (_10Posts.length == 0 || _10Posts.length < 0) {
+                              return Center(
+                                  child: CircularProgressIndicator(
+                                backgroundColor: Colors.deepPurple[200],
+                              ));
+                            } else if (_10Posts.length > 0) {
+                              return Container(
+                                margin: EdgeInsets.all(10),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ShowItem(
+                                                  index: index.toString(),
+                                                  title: _10Posts[index]
+                                                          ['title']
+                                                      .toString(),
+                                                  img: _10Posts[index]['img']
+                                                      .toString(),
+                                                  id: _10Posts[index]['_id']
+                                                      .toString(),
+                                                  desc: _10Posts[index]['desc']
+                                                      .toString(),
+                                                  short_title: _10Posts[index]
+                                                          ['short_title']
+                                                      .toString(),
+                                                  short_desc: _10Posts[index]
+                                                          ['short_desc']
+                                                      .toString(),
+                                                  season: _10Posts[index]
+                                                          ['season']
+                                                      .toString(),
+                                                  createdAt: _10Posts[index]
+                                                      ['createdAt'],
+                                                  nouveau: _10Posts[index]
+                                                      ['new'],
+                                                )));
+                                  },
+                                  child: Stack(
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(24),
+                                      Positioned(
+                                        bottom: 2,
                                         child: Container(
+                                          width: 150,
+                                          height: 80,
+                                          padding: EdgeInsets.only(
+                                              top: 23, left: 10),
                                           decoration: BoxDecoration(
+                                              color: Colors.white,
                                               borderRadius:
-                                                  BorderRadius.circular(24),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.black26,
-                                                    blurRadius: 5,
-                                                    offset: Offset(0, 5))
-                                              ]),
-                                          child: Image.network(
-                                            'https://images.unsplash.com/photo-1597240542691-2f5dd7834da0?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80',
-                                            fit: BoxFit.cover,
-                                            height: 150,
-                                            width: 150,
-                                            color: Colors.black.withOpacity(.2),
-                                            colorBlendMode: BlendMode.multiply,
+                                                  BorderRadius.circular(12)),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${_10Posts[index]['title']}',
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${_10Posts[index]['short_title']}',
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                style: TextStyle(
+                                                    fontSize: 9,
+                                                    fontFamily: 'Roboto',
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.only(
+                                                          top: 3,
+                                                          bottom: 3,
+                                                          left: 12,
+                                                          right: 12),
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Colors.green[300],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                      ),
+                                                      child: Text(
+                                                        '${boolNewToText(_10Posts[index]['new'])}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w900,
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontSize: 9,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                   seasonTextToWigdet(_10Posts[index]['season']["name"],12,3,9,0,0),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
+                                      Stack(
+                                        alignment: Alignment.topCenter,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black26,
+                                                        blurRadius: 5,
+                                                        offset: Offset(0, 5))
+                                                  ]),
+                                              child: Image.network(
+                                                '${_10Posts[index]['img']}',
+                                                fit: BoxFit.cover,
+                                                height: 150,
+                                                width: 150,
+                                                color: Colors.black
+                                                    .withOpacity(.2),
+                                                colorBlendMode:
+                                                    BlendMode.multiply,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                     ],
-                                  )
-                                ],
-                              ),
-                            );
+                                  ),
+                                ),
+                              );
+                            }
                           }),
                     )
                   ],
@@ -366,7 +472,7 @@ class ShowItemState extends State<ShowItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Other season',
+                              'Favorises',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 17),
                             ),
@@ -378,58 +484,19 @@ class ShowItemState extends State<ShowItem> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 2),
-                            child: RaisedButton(
-                              onPressed: () {},
-                              color: Colors.deepPurple[600],
-                              textColor: Colors.blue.shade200,
-                              child: Icon(
-                                Icons.ac_unit,
-                                size: 19,
-                              ),
-                              padding: EdgeInsets.only(
-                                  top: 4, bottom: 4, left: 9, right: 9),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14)),
-                            ),
-                          ),
                           RaisedButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple[600],
-                            textColor: Colors.green.shade200,
-                            child: Icon(
-                              Icons.local_florist_rounded,
-                              size: 19,
-                            ),
-                            padding: EdgeInsets.only(
-                                top: 4, bottom: 4, left: 9, right: 9),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 2, left: 2),
-                            child: RaisedButton(
-                              onPressed: () {},
-                              color: Colors.deepPurple[600],
-                              textColor: Colors.yellow.shade200,
-                              child: Icon(
-                                Icons.wb_sunny_outlined,
-                                size: 19,
-                              ),
-                              padding: EdgeInsets.only(
-                                  top: 4, bottom: 4, left: 9, right: 9),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14)),
-                            ),
-                          ),
-                          RaisedButton(
-                            onPressed: () {},
-                            color: Colors.deepPurple[600],
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/favorite');
+                            },
+                            color: Colors.deepPurple[200],
                             textColor: Colors.white,
-                            child: Icon(
-                              Icons.flash_on_outlined,
-                              size: 19,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.favorite_outline,
+                                  size: 29,
+                                ),
+                              ],
                             ),
                             padding: EdgeInsets.only(
                                 top: 4, bottom: 4, left: 9, right: 9),

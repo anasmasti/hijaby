@@ -24,12 +24,12 @@ class FooterState extends State<Footer> {
           children: [
             Text(
               'Hijaby 2021 © Copyright',
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 12),
             ),
             FlatButton(
                 onPressed: () {},
                 child: Text(
-                  'Privacy Polici',
+                  'Privacy policy',
                   style: TextStyle(
                       fontSize: 12, color: Colors.deepPurple.shade400),
                 ))

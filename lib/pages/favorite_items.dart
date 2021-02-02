@@ -4,6 +4,7 @@ import 'package:hijaby/data/databaseLocale.dart';
 import 'package:hijaby/model/post.dart';
 import 'package:hijaby/pages/components/footer.dart';
 import 'package:hijaby/pages/functions/convertdate.dart';
+import 'package:hijaby/pages/functions/var_to_text.dart';
 import 'package:hijaby/pages/show_item.dart';
 
 // ignore: must_be_immutable
@@ -29,7 +30,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
   @override
   void initState() {
     super.initState();
-    
+
     getFavoriteItems();
   }
 
@@ -150,6 +151,13 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
+                                                  seasonTextToWigdet(
+                                                      _posts[index].postSeason,
+                                                      12,
+                                                      3,
+                                                      9,
+                                                      0,
+                                                      4),
                                                   Text(
                                                     '${_posts[index].postTitle}',
                                                     style: TextStyle(
@@ -160,7 +168,8 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                             FontWeight.w900),
                                                   ),
                                                   Container(
-                                                    padding: EdgeInsets.only(top:6),
+                                                    padding:
+                                                        EdgeInsets.only(top: 6),
                                                     width: 120,
                                                     child: Text(
                                                         '${_posts[index].postShort_desc}',
@@ -169,7 +178,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                                 Colors.black38,
                                                             fontFamily:
                                                                 'Roboto',
-                                                            fontSize:12,
+                                                            fontSize: 12,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal)),
@@ -177,7 +186,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            top: 18.0),
+                                                            top: 15.0),
                                                     child: Text(
                                                       'Published on : ${ConvertToDate.convertToDate(_posts[index].postCreatedAt)}',
                                                       style: TextStyle(
@@ -201,8 +210,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                       await DatabaseLocale
                                                           .database
                                                           .deletePost(myId);
-                                                          getFavoriteItems();
-                                                          
+                                                      getFavoriteItems();
                                                     },
                                                     color: Colors.white,
                                                     textColor: Colors.red[300],
