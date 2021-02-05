@@ -1,4 +1,4 @@
-
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:hijaby/data/fetchData.dart';
 import 'package:hijaby/pages/functions/check_connexion.dart';
@@ -7,6 +7,8 @@ import 'package:hijaby/pages/show_all_items.dart';
 import 'package:hijaby/pages/show_item.dart';
 import 'package:hijaby/pages/components/footer.dart';
 import 'package:hijaby/pages/show_season.dart';
+
+import '../ads/admob.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -26,8 +28,13 @@ class HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-   
-
+    FirebaseAdMob.instance
+        .initialize(appId: "ca-app-pub-3940256099942544/3419835294");
+    Admob.getBanner()
+      ..load()
+      ..show(
+        anchorType: AnchorType.bottom,
+      );
     CheckConnexion.checkConnexion(context);
 
     FetchData().getPosts().then((value) {

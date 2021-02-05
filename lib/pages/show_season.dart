@@ -133,18 +133,18 @@ class ShowSeasonState extends State<ShowSeason> {
                               MaterialPageRoute(
                                   builder: (context) => ShowItem(
                                         index: index.toString(),
-                                        title: posts[index]["title"].toString(),
-                                        img: posts[index]["img"].toString(),
-                                        id: posts[index]["_id"].toString(),
-                                        desc: posts[index]["desc"].toString(),
-                                        short_title: posts[index]["short_title"]
+                                        title: posts[index]['title'].toString(),
+                                        img: posts[index]['img'].toString(),
+                                        id: posts[index]['_id'].toString(),
+                                        desc: posts[index]['desc'].toString(),
+                                        short_title: posts[index]['short_title']
                                             .toString(),
-                                        short_desc: posts[index]["short_desc"]
+                                        short_desc: posts[index]['short_desc']
                                             .toString(),
-                                        season:
-                                            posts[index]['season'].toString(),
-                                        createdAt: posts[index]["createdAt"],
-                                        nouveau: posts[index]["nouveau"],
+                                        season: posts[index]['season']['name']
+                                            .toString(),
+                                        createdAt: posts[index]['createdAt'],
+                                        nouveau: posts[index]['new'],
                                       )));
                         },
                         child: Row(
