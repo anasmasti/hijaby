@@ -159,7 +159,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                       0,
                                                       4),
                                                   Text(
-                                                    '${_posts[index].postTitle}',
+                                                    '${_posts[index].postTitle.substring(0, 10)}...',
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         fontFamily: 'Roboto',
@@ -172,7 +172,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                         EdgeInsets.only(top: 6),
                                                     width: 120,
                                                     child: Text(
-                                                        '${_posts[index].postShort_desc}',
+                                                        '${_posts[index].postShort_desc.substring(0, 25)}...',
                                                         style: TextStyle(
                                                             color:
                                                                 Colors.black38,
@@ -235,7 +235,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(24),
                                       child: Image.network(
-                                        '${_posts[index].postImg}',
+                                        '${_posts[index].postImg}' ?? '--' ,
                                         fit: BoxFit.cover,
                                         height: 150,
                                         width: 150,

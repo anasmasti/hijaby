@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hijaby/pages/components/splash_screen.dart';
+import 'package:hijaby/pages/privacy.dart';
+import 'package:hijaby/pages/splash_screen.dart';
 import 'package:hijaby/pages/favorite_items.dart';
 import 'package:hijaby/pages/home.dart';
 import 'package:hijaby/pages/show_season.dart';
@@ -18,6 +19,7 @@ void main() async {
       '/season': (context) => ShowSeason(),
       '/splash_screen': (context) => SplashScreen(),
       '/favorite': (context) => FavoriteItems(),
+      '/privacy': (context) => Privacy(),
     },
     home: new MyApp(),
   ));

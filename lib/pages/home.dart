@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:hijaby/data/fetchData.dart';
+import 'package:hijaby/pages/components/header.dart';
 import 'package:hijaby/pages/functions/check_connexion.dart';
 import 'package:hijaby/pages/functions/var_to_text.dart';
 import 'package:hijaby/pages/show_all_items.dart';
 import 'package:hijaby/pages/show_item.dart';
 import 'package:hijaby/pages/components/footer.dart';
 import 'package:hijaby/pages/show_season.dart';
-
 import '../ads/admob.dart';
+import 'components/alert_dialog.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -23,6 +26,7 @@ class HomeState extends State<Home> {
   List _10Posts = [];
   List _newPosts = [];
   List _seasons = [];
+  BannerAd _bannerAd;
 
   @override
   void initState() {
@@ -30,32 +34,37 @@ class HomeState extends State<Home> {
 
     FirebaseAdMob.instance
         .initialize(appId: "ca-app-pub-3940256099942544/3419835294");
-    Admob.getBanner()
-      ..load()
-      ..show(
-        anchorType: AnchorType.bottom,
-      );
-    CheckConnexion.checkConnexion(context);
 
-    FetchData().getPosts().then((value) {
+    _bannerAd = Admob.getBanner();
+    _bannerAd?.load();
+
+    Timer(Duration(seconds: 3), () {
+      _bannerAd?.show();
+    });
+
+    setState(() {
+      CheckConnexion.checkConnexion(context);
+    });
+
+    FetchData().getPosts(context).then((value) {
       setState(() {
         _posts.addAll(value);
       });
     });
 
-    FetchData().getSeasons().then((value) {
+    FetchData().getSeasons(context).then((value) {
       setState(() {
         _seasons.addAll(value);
       });
     });
 
-    FetchData().getNewPosts().then((value) {
+    FetchData().getNewPosts(context).then((value) {
       setState(() {
         _newPosts.addAll(value);
       });
     });
 
-    FetchData().get10Posts().then((value) {
+    FetchData().get10Posts(context).then((value) {
       setState(() {
         _10Posts.addAll(value);
       });
@@ -66,6 +75,7 @@ class HomeState extends State<Home> {
   void dispose() {
     super.dispose();
     CheckConnexion.checkConnexion(context).cancel();
+    _bannerAd?.dispose();
   }
 
   @override
@@ -75,43 +85,8 @@ class HomeState extends State<Home> {
       body: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 37.0, bottom: 10),
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 7, left: 11, right: 11),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Hijaby',
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w900,
-                          fontSize: 35),
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/favorite');
-                      },
-                      color: Colors.deepPurple[200],
-                      textColor: Colors.white,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.favorite_outline,
-                            size: 29,
-                          ),
-                        ],
-                      ),
-                      padding:
-                          EdgeInsets.only(top: 4, bottom: 4, left: 9, right: 9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14)),
-                    ),
-                  ],
-                ),
-              ),
-            ]),
+            padding: const EdgeInsets.only(top: 47.0, bottom: 3),
+            child: Column(children: [Header()]),
           ),
           Expanded(
             child: ListView(children: [
@@ -153,42 +128,48 @@ class HomeState extends State<Home> {
                         itemCount: _10Posts.length,
                         // ignore: missing_return
                         itemBuilder: (BuildContext context, int index) {
-                          if (_10Posts.length == 0 || _10Posts.length < 0) {
+                          if (_10Posts.isEmpty) {
                             return Center(
                                 child: CircularProgressIndicator(
                               backgroundColor: Colors.deepPurple[200],
                             ));
-                          } else if (_10Posts.length > 0) {
+                          } else if (_10Posts.isNotEmpty) {
                             return Container(
                               margin: EdgeInsets.all(10),
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ShowItem(
-                                                index: index.toString(),
-                                                title: _10Posts[index]['title']
-                                                    .toString(),
-                                                img: _10Posts[index]['img']
-                                                    .toString(),
-                                                id: _10Posts[index]['_id']
-                                                    .toString(),
-                                                desc: _10Posts[index]['desc']
-                                                    .toString(),
-                                                short_title: _10Posts[index]
-                                                        ['short_title']
-                                                    .toString(),
-                                                short_desc: _10Posts[index]
-                                                        ['short_desc']
-                                                    .toString(),
-                                                season: _10Posts[index]
-                                                        ['season']['name']
-                                                    .toString(),
-                                                createdAt: _10Posts[index]
-                                                    ['createdAt'],
-                                                nouveau: _10Posts[index]['new'],
-                                              )));
+                                  Navigator.push(context, MaterialPageRoute(
+                                      // ignore: missing_return
+                                      builder: (context) {
+                                    if (_10Posts.isNotEmpty) {
+                                      return ShowItem(
+                                        index: index.toString(),
+                                        title:
+                                            _10Posts[index]['title'].toString(),
+                                        img: _10Posts[index]['img'].toString(),
+                                        id: _10Posts[index]['_id'].toString(),
+                                        desc:
+                                            _10Posts[index]['desc'].toString(),
+                                        short_title: _10Posts[index]
+                                                ['short_title']
+                                            .toString(),
+                                        short_desc: _10Posts[index]
+                                                ['short_desc']
+                                            .toString(),
+                                        season: _10Posts[index]['season']
+                                                ['name']
+                                            .toString(),
+                                        createdAt: _10Posts[index]['createdAt'],
+                                        nouveau: _10Posts[index]['new'],
+                                      );
+                                    } else if (_10Posts.isEmpty) {
+                                      MyAlertDialog.displayAlertDialog(
+                                          context,
+                                          'No Internet Connection :/',
+                                          'You have to connect to the internet to continue to hang out on the application.',
+                                          0xFFE57373);
+                                    }
+                                  }));
                                 },
                                 child: Stack(
                                   children: [
@@ -335,63 +316,72 @@ class HomeState extends State<Home> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: _seasons.length,
+                      // ignore: missing_return
                       itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ShowSeason(
-                                          index: index.toString(),
-                                          name: _seasons[index]['name']
-                                              .toString(),
-                                          desc: _seasons[index]['desc']
-                                              .toString(),
-                                          img:
-                                              _seasons[index]['img'].toString(),
-                                          id: _seasons[index]['_id'].toString(),
-                                        )));
-                          },
-                          child: Container(
-                            margin: EdgeInsets.all(10),
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: [
-                                Hero(
-                                  tag: 'des$index',
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(24),
-                                    child: Container(
-                                      decoration: BoxDecoration(boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black26,
-                                            blurRadius: 5,
-                                            offset: Offset(0, 5))
-                                      ]),
-                                      child: Image.network(
-                                        '${_seasons[index]['img']}',
-                                        fit: BoxFit.cover,
-                                        height: 120,
-                                        width: 250,
-                                        color: Colors.black.withOpacity(.3),
-                                        colorBlendMode: BlendMode.multiply,
+                        if (_seasons.isNotEmpty) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ShowSeason(
+                                            index: index.toString(),
+                                            name: _seasons[index]['name']
+                                                .toString(),
+                                            desc: _seasons[index]['desc']
+                                                .toString(),
+                                            img: _seasons[index]['img']
+                                                .toString(),
+                                            id: _seasons[index]['_id']
+                                                .toString(),
+                                          )));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(10),
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: [
+                                  Hero(
+                                    tag: 'des$index',
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(24),
+                                      child: Container(
+                                        decoration: BoxDecoration(boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black26,
+                                              blurRadius: 5,
+                                              offset: Offset(0, 5))
+                                        ]),
+                                        child: Image.network(
+                                          '${_seasons[index]['img']}',
+                                          fit: BoxFit.cover,
+                                          height: 120,
+                                          width: 250,
+                                          color: Colors.black.withOpacity(.3),
+                                          colorBlendMode: BlendMode.multiply,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(top: 50),
-                                    child: Text(
-                                      '${_seasons[index]['name']}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ))
-                              ],
+                                  Container(
+                                      padding: EdgeInsets.only(top: 50),
+                                      child: Text(
+                                        '${_seasons[index]['name']}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white),
+                                      ))
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else if (_seasons.isEmpty) {
+                          return Center(
+                              child: CircularProgressIndicator(
+                            backgroundColor: Colors.deepPurple[200],
+                          ));
+                        }
                       },
                     ),
                   ),
@@ -412,18 +402,18 @@ class HomeState extends State<Home> {
                         ],
                       )),
                   Container(
-                    height: 230,
+                    height: 235,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: _newPosts.length,
                         // ignore: missing_return
                         itemBuilder: (BuildContext context, int index) {
-                          if (_newPosts.length == 0 || _newPosts.length < 0) {
+                          if (_newPosts.isEmpty) {
                             return Center(
                                 child: CircularProgressIndicator(
                               backgroundColor: Colors.deepPurple[200],
                             ));
-                          } else if (_newPosts.length > 0) {
+                          } else if (_newPosts.isNotEmpty) {
                             return Container(
                               margin: EdgeInsets.all(10),
                               child: GestureDetector(

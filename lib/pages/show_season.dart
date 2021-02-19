@@ -33,7 +33,7 @@ class ShowSeasonState extends State<ShowSeason> {
   @override
   void initState() {
     super.initState();
-    FetchData().getPostsBySeasons(id).then((value) {
+    FetchData().getPostsBySeasons(context, id).then((value) {
       setState(() {
         posts.addAll(value);
       });
@@ -84,11 +84,6 @@ class ShowSeasonState extends State<ShowSeason> {
                     IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(Icons.arrow_back_ios),
-                      color: Colors.white,
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.info_outline_rounded),
                       color: Colors.white,
                     ),
                   ],
@@ -185,7 +180,7 @@ class ShowSeasonState extends State<ShowSeason> {
                                                       0,
                                                       4),
                                                   Text(
-                                                    '${posts[index]['title']}',
+                                                    '${posts[index]['title'].substring(0, 10)}...',
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         fontFamily: 'Roboto',
@@ -198,7 +193,7 @@ class ShowSeasonState extends State<ShowSeason> {
                                                         EdgeInsets.only(top: 6),
                                                     width: 120,
                                                     child: Text(
-                                                        '${posts[index]["short_desc"]}',
+                                                        '${posts[index]["short_desc"].substring(0, 25)}...',
                                                         style: TextStyle(
                                                             color:
                                                                 Colors.black38,

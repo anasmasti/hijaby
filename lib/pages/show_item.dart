@@ -74,7 +74,7 @@ class ShowItemState extends State<ShowItem> {
   @override
   void initState() {
     super.initState();
-    FetchData().get10Posts().then((value) {
+    FetchData().get10Posts(context).then((value) {
       setState(() {
         _10Posts.addAll(value);
       });

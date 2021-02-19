@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:hijaby/pages/components/alert_dialog.dart';
 import 'package:http/http.dart' as http;
 
 class FetchData {
   final url = 'https://hijaby.herokuapp.com/api';
 
-  Future getPosts() async {
+  Future getPosts(BuildContext context) async {
     var posts = [];
     try {
       http.Response response = await http.get('$url/posts');
@@ -17,11 +19,15 @@ class FetchData {
       }
       return posts;
     } catch (_) {
-      print('connexion error');
+      return MyAlertDialog.displayAlertDialog(
+          context,
+          'No Internet Connection :/',
+          'You have to connect to the internet to continue to hang out on the application.',
+          0xFFE57373);
     }
   }
 
-  Future getSeasons() async {
+  Future getSeasons(BuildContext context) async {
     var seasons = [];
     try {
       http.Response response = await http.get('$url/seasons');
@@ -33,11 +39,15 @@ class FetchData {
       }
       return seasons;
     } catch (_) {
-      print('connexion error');
+      return MyAlertDialog.displayAlertDialog(
+          context,
+          'No Internet Connection :/',
+          'You have to connect to the internet to continue to hang out on the application.',
+          0xFFE57373);
     }
   }
 
-  Future getPostsBySeasons(String idSeason) async {
+  Future getPostsBySeasons(BuildContext context, String idSeason) async {
     var seasons = [];
     try {
       http.Response response = await http.get('$url/posts/byseason/$idSeason');
@@ -49,11 +59,15 @@ class FetchData {
       }
       return seasons;
     } catch (_) {
-      print('connexion error');
+      return MyAlertDialog.displayAlertDialog(
+          context,
+          'No Internet Connection :/',
+          'You have to connect to the internet to continue to hang out on the application.',
+          0xFFE57373);
     }
   }
 
-  Future getNewPosts() async {
+  Future getNewPosts(BuildContext context) async {
     var posts = [];
     try {
       http.Response response = await http.get('$url/posts/new/post');
@@ -65,11 +79,15 @@ class FetchData {
       }
       return posts;
     } catch (_) {
-      print('connexion error');
+      return MyAlertDialog.displayAlertDialog(
+          context,
+          'No Internet Connection :/',
+          'You have to connect to the internet to continue to hang out on the application.',
+          0xFFE57373);
     }
   }
 
-  Future get10Posts() async {
+  Future get10Posts(BuildContext context) async {
     var posts = [];
     try {
       http.Response response = await http.get('$url/posts/take/post');
@@ -81,7 +99,11 @@ class FetchData {
       }
       return posts;
     } catch (_) {
-      print('connexion error');
+      return MyAlertDialog.displayAlertDialog(
+          context,
+          'No Internet Connection :/',
+          'You have to connect to the internet to continue to hang out on the application.',
+          0xFFE57373);
     }
   }
 }

@@ -154,7 +154,7 @@ class ShowAllItemsState extends State<ShowAllItems> {
                                                       0,
                                                       4),
                                                   Text(
-                                                    '${posts[index]['title']}',
+                                                    '${posts[index]['title'].substring(0, 10)}...',
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         fontFamily: 'Roboto',
@@ -167,7 +167,7 @@ class ShowAllItemsState extends State<ShowAllItems> {
                                                         EdgeInsets.only(top: 6),
                                                     width: 120,
                                                     child: Text(
-                                                        '${posts[index]["short_desc"]}',
+                                                        '${posts[index]["short_desc"].substring(0, 25)}...',
                                                         style: TextStyle(
                                                             color:
                                                                 Colors.black38,

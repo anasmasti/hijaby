@@ -19,21 +19,26 @@ class FooterState extends State<Footer> {
           left: 18.0,
           right: 18,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Hijaby 2021 © Copyright',
-              style: TextStyle(fontSize: 12),
-            ),
-            FlatButton(
-                onPressed: () {},
-                child: Text(
-                  'Privacy policy',
-                  style: TextStyle(
-                      fontSize: 12, color: Colors.deepPurple.shade400),
-                ))
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 70),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Hijaby 2021 © Copyright',
+                style: TextStyle(fontSize: 12),
+              ),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/privacy');
+                  },
+                  child: Text(
+                    'Privacy policy',
+                    style: TextStyle(
+                        fontSize: 12, color: Colors.deepPurple.shade400),
+                  )),
+            ],
+          ),
         ),
       ),
     );
