@@ -33,7 +33,7 @@ class HomeState extends State<Home> {
     super.initState();
 
     FirebaseAdMob.instance
-        .initialize(appId: "ca-app-pub-3940256099942544/3419835294");
+        .initialize(appId: "ca-app-pub-7266395079327700~2959943635");
 
     _bannerAd = Admob.getBanner();
     _bannerAd?.load();

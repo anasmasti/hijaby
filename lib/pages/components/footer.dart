@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hijaby/pages/components/alert_dialog.dart';
 
 class Footer extends StatefulWidget {
   Footer();
@@ -30,7 +31,15 @@ class FooterState extends State<Footer> {
               ),
               FlatButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/privacy');
+                    try{
+                      Navigator.pushNamed(context, '/privacy');
+                    }catch(_){
+                      MyAlertDialog.displayAlertDialog(
+                          context,
+                          'No Internet Connection :/',
+                          'You have to connect to the internet to continue to hang out on the application.',
+                          0xFFE57373);
+                    }
                   },
                   child: Text(
                     'Privacy policy',
