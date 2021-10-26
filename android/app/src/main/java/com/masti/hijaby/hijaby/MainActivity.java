@@ -1,4 +1,4 @@
-package com.masti.hijaby.hijaby;
+package com.masti.hijaby;
 
 import io.flutter.embedding.android.FlutterActivity;
 
