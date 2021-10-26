@@ -46,8 +46,8 @@ class ShowAllItemsState extends State<ShowAllItems> {
                 decoration: BoxDecoration(
                     color: Colors.deepPurple[200],
                     borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(40),
-                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(30),
+                      bottomLeft: Radius.circular(30),
                     )),
               ),
               Container(
