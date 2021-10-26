@@ -22,7 +22,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
 
   getFavoriteItems() async {
     List<Post> mydata = [];
-    mydata = await DatabaseLocale.database.getAllPosts();
+    mydata = await DatabaseLocale.instance.getAllPosts();
     setState(() {
       _posts = mydata;
     });
@@ -211,7 +211,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                       String myId =
                                                           _posts[index].postId;
                                                       await DatabaseLocale
-                                                          .database
+                                                          .instance
                                                           .deletePost(myId);
                                                       getFavoriteItems();
                                                     },

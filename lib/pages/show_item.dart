@@ -1,7 +1,9 @@
 // ignore_for_file: no_logic_in_create_state, prefer_is_empty
 
 import 'package:flutter/material.dart';
+import 'package:hijaby/data/database_locale.dart';
 import 'package:hijaby/data/fetch_data.dart';
+import 'package:hijaby/model/post.dart';
 import 'package:hijaby/shared/components/alert_dialog.dart';
 import 'package:hijaby/shared/components/footer.dart';
 import 'package:hijaby/shared/functions/convertdate.dart';
@@ -85,6 +87,18 @@ class ShowItemState extends State<ShowItem> {
 
   @override
   Widget build(BuildContext context) {
+    final post = Post(
+      postId: id,
+      postTitle: title,
+      postImg: img,
+      postDesc: desc,
+      postShort_title: short_title,
+      postShort_desc: short_desc,
+      postSeason: season,
+      postCreatedAt: createdAt,
+      postNouveau: 1,
+    );
+
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
       body: Column(
@@ -132,7 +146,7 @@ class ShowItemState extends State<ShowItem> {
                     IconButton(
                       onPressed: () async {
                         try {
-                          // await DatabaseLocale.database.insertPost(post);
+                          await DatabaseLocale.instance.insertPost(post);
                           return MyAlertDialog.displayAlertDialog(
                               context,
                               'Done!',
