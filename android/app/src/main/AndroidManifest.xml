@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.masti.hijaby.hijaby">
+    package="com.masti.hijaby">
    <application
         android:label="hijaby"
         android:icon="@mipmap/ic_launcher">
