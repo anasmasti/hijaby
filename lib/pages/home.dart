@@ -1,50 +1,49 @@
-import 'dart:async';
-
-import 'package:firebase_admob/firebase_admob.dart';
+// import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
-import 'package:hijaby/data/fetchData.dart';
-import 'package:hijaby/pages/components/header.dart';
-import 'package:hijaby/pages/functions/check_connexion.dart';
-import 'package:hijaby/pages/functions/var_to_text.dart';
+import 'package:hijaby/data/fetch_data.dart';
 import 'package:hijaby/pages/show_all_items.dart';
 import 'package:hijaby/pages/show_item.dart';
-import 'package:hijaby/pages/components/footer.dart';
 import 'package:hijaby/pages/show_season.dart';
-import '../ads/admob.dart';
-import 'components/alert_dialog.dart';
+import 'package:hijaby/shared/components/alert_dialog.dart';
+import 'package:hijaby/shared/functions/check_connexion.dart';
+import 'package:hijaby/shared/functions/var_to_text.dart';
+import 'package:hijaby/shared/components/footer.dart';
+import 'package:hijaby/shared/components/header.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return new HomeState();
+    return HomeState();
   }
 }
 
 class HomeState extends State<Home> {
-  List _posts = [];
+  final List _posts = [];
   // ignore: non_constant_identifier_names
-  List _10Posts = [];
-  List _newPosts = [];
-  List _seasons = [];
-  BannerAd _bannerAd;
+  final List _10Posts = [];
+  final List _newPosts = [];
+  final List _seasons = [];
+  // late BannerAd _bannerAd;
 
   @override
   void initState() {
     super.initState();
 
-    FirebaseAdMob.instance
-        .initialize(appId: "ca-app-pub-7266395079327700~2959943635");
+    // FirebaseAdMob.instance
+    //     .initialize(appId: "ca-app-pub-7266395079327700~2959943635");
 
-    _bannerAd = Admob.getBanner();
-    _bannerAd?.load();
+    // _bannerAd = Admob.getBanner();
+    // _bannerAd.load();
 
-    Timer(Duration(seconds: 3), () {
-      _bannerAd?.show();
-    });
+    // Timer(const Duration(seconds: 3), () {
+    //   _bannerAd.show();
+    // });
 
-    setState(() {
-      CheckConnexion.checkConnexion(context);
-    });
+    // setState(() {
+    //   CheckConnexion.checkConnexion(context);
+    // });
 
     FetchData().getPosts(context).then((value) {
       setState(() {
@@ -75,7 +74,7 @@ class HomeState extends State<Home> {
   void dispose() {
     super.dispose();
     CheckConnexion.checkConnexion(context).cancel();
-    _bannerAd?.dispose();
+    // _bannerAd.dispose();
   }
 
   @override
@@ -86,22 +85,23 @@ class HomeState extends State<Home> {
         children: [
           Container(
             padding: const EdgeInsets.only(top: 47.0, bottom: 3),
-            child: Column(children: [Header()]),
+            child: Column(children: const [Header()]),
           ),
           Expanded(
             child: ListView(children: [
               Column(
                 children: [
                   Padding(
-                      padding: EdgeInsets.only(left: 12.0, right: 2),
+                      padding: const EdgeInsets.only(left: 12.0, right: 2),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Recommend',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17),
                           ),
+                          // ignore: deprecated_member_use
                           FlatButton(
                             onPressed: () {
                               Navigator.push(
@@ -109,6 +109,7 @@ class HomeState extends State<Home> {
                                   MaterialPageRoute(
                                       builder: (context) => ShowAllItems(
                                             posts: _posts,
+                                            title: '',
                                           )));
                             },
                             child: Text(
@@ -121,7 +122,7 @@ class HomeState extends State<Home> {
                           )
                         ],
                       )),
-                  Container(
+                  SizedBox(
                     height: 235,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -135,7 +136,7 @@ class HomeState extends State<Home> {
                             ));
                           } else if (_10Posts.isNotEmpty) {
                             return Container(
-                              margin: EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(
@@ -169,6 +170,7 @@ class HomeState extends State<Home> {
                                           'You have to connect to the internet to continue to hang out on the application.',
                                           0xFFE57373);
                                     }
+                                    return const Text('loading...');
                                   }));
                                 },
                                 child: Stack(
@@ -178,8 +180,8 @@ class HomeState extends State<Home> {
                                       child: Container(
                                         width: 150,
                                         height: 80,
-                                        padding:
-                                            EdgeInsets.only(top: 23, left: 10),
+                                        padding: const EdgeInsets.only(
+                                            top: 23, left: 10),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
@@ -191,7 +193,7 @@ class HomeState extends State<Home> {
                                             Text(
                                               '${_10Posts[index]['title']}',
                                               textDirection: TextDirection.ltr,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: 'Roboto',
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -199,7 +201,7 @@ class HomeState extends State<Home> {
                                             Text(
                                               '${_10Posts[index]['short_title']}',
                                               textDirection: TextDirection.ltr,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 9,
                                                   fontFamily: 'Roboto',
                                                   color: Colors.black,
@@ -214,11 +216,12 @@ class HomeState extends State<Home> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 3,
-                                                        bottom: 3,
-                                                        left: 12,
-                                                        right: 12),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 3,
+                                                            bottom: 3,
+                                                            left: 12,
+                                                            right: 12),
                                                     decoration: BoxDecoration(
                                                       color: Colors.green[300],
                                                       borderRadius:
@@ -227,7 +230,7 @@ class HomeState extends State<Home> {
                                                     ),
                                                     child: Text(
                                                       '${boolNewToText(_10Posts[index]['new'])}',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.w900,
                                                           fontFamily: 'Roboto',
@@ -262,7 +265,7 @@ class HomeState extends State<Home> {
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(24),
-                                                  boxShadow: [
+                                                  boxShadow: const [
                                                     BoxShadow(
                                                         color: Colors.black26,
                                                         blurRadius: 5,
@@ -288,22 +291,23 @@ class HomeState extends State<Home> {
                               ),
                             );
                           }
+                          return const Text('loading...');
                         }),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Column(
                 children: [
                   Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         left: 12.0,
                         right: 14,
                       ),
                       child: Row(
-                        children: [
+                        children: const [
                           Text(
                             'The four seasons',
                             style: TextStyle(
@@ -311,7 +315,7 @@ class HomeState extends State<Home> {
                           )
                         ],
                       )),
-                  Container(
+                  SizedBox(
                     height: 170,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -337,7 +341,7 @@ class HomeState extends State<Home> {
                                           )));
                             },
                             child: Container(
-                              margin: EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
                               child: Stack(
                                 alignment: Alignment.topCenter,
                                 children: [
@@ -346,12 +350,13 @@ class HomeState extends State<Home> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(24),
                                       child: Container(
-                                        decoration: BoxDecoration(boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.black26,
-                                              blurRadius: 5,
-                                              offset: Offset(0, 5))
-                                        ]),
+                                        decoration: const BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.black26,
+                                                  blurRadius: 5,
+                                                  offset: Offset(0, 5))
+                                            ]),
                                         child: Image.network(
                                           '${_seasons[index]['img']}',
                                           fit: BoxFit.cover,
@@ -364,10 +369,10 @@ class HomeState extends State<Home> {
                                     ),
                                   ),
                                   Container(
-                                      padding: EdgeInsets.only(top: 50),
+                                      padding: const EdgeInsets.only(top: 50),
                                       child: Text(
                                         '${_seasons[index]['name']}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
                                             color: Colors.white),
@@ -382,6 +387,7 @@ class HomeState extends State<Home> {
                             backgroundColor: Colors.deepPurple[200],
                           ));
                         }
+                        return const Text('loading...');
                       },
                     ),
                   ),
@@ -390,10 +396,10 @@ class HomeState extends State<Home> {
               Column(
                 children: [
                   Padding(
-                      padding: EdgeInsets.only(left: 12.0, right: 14),
+                      padding: const EdgeInsets.only(left: 12.0, right: 14),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text(
                             'Novelties',
                             style: TextStyle(
@@ -401,7 +407,7 @@ class HomeState extends State<Home> {
                           ),
                         ],
                       )),
-                  Container(
+                  SizedBox(
                     height: 235,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -415,7 +421,7 @@ class HomeState extends State<Home> {
                             ));
                           } else if (_newPosts.isNotEmpty) {
                             return Container(
-                              margin: EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -453,8 +459,8 @@ class HomeState extends State<Home> {
                                       child: Container(
                                         width: 150,
                                         height: 80,
-                                        padding:
-                                            EdgeInsets.only(top: 23, left: 10),
+                                        padding: const EdgeInsets.only(
+                                            top: 23, left: 10),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
@@ -466,7 +472,7 @@ class HomeState extends State<Home> {
                                             Text(
                                               '${_newPosts[index]['title']}',
                                               textDirection: TextDirection.ltr,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: 'Roboto',
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -474,7 +480,7 @@ class HomeState extends State<Home> {
                                             Text(
                                               '${_newPosts[index]['short_title']}',
                                               textDirection: TextDirection.ltr,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 9,
                                                   fontFamily: 'Roboto',
                                                   color: Colors.black,
@@ -489,11 +495,12 @@ class HomeState extends State<Home> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 3,
-                                                        bottom: 3,
-                                                        left: 12,
-                                                        right: 12),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 3,
+                                                            bottom: 3,
+                                                            left: 12,
+                                                            right: 12),
                                                     decoration: BoxDecoration(
                                                       color: Colors.green[300],
                                                       borderRadius:
@@ -502,7 +509,7 @@ class HomeState extends State<Home> {
                                                     ),
                                                     child: Text(
                                                       '${boolNewToText(_newPosts[index]['new'])}',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.w900,
                                                           fontFamily: 'Roboto',
@@ -535,7 +542,7 @@ class HomeState extends State<Home> {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(24),
-                                                boxShadow: [
+                                                boxShadow: const [
                                                   BoxShadow(
                                                       color: Colors.black26,
                                                       blurRadius: 5,
@@ -560,11 +567,12 @@ class HomeState extends State<Home> {
                               ),
                             );
                           }
+                          return const Text('loading...');
                         }),
                   )
                 ],
               ),
-              Footer(),
+              const Footer(),
             ]),
           ),
         ],

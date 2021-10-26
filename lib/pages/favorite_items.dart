@@ -1,17 +1,19 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:hijaby/data/databaseLocale.dart';
+import 'package:hijaby/data/database_locale.dart';
 import 'package:hijaby/model/post.dart';
-import 'package:hijaby/pages/components/footer.dart';
-import 'package:hijaby/pages/functions/convertdate.dart';
-import 'package:hijaby/pages/functions/var_to_text.dart';
+import 'package:hijaby/shared/components/footer.dart';
+import 'package:hijaby/shared/functions/convertdate.dart';
+import 'package:hijaby/shared/functions/var_to_text.dart';
 import 'package:hijaby/pages/show_item.dart';
 
 // ignore: must_be_immutable
 class FavoriteItems extends StatefulWidget {
+  const FavoriteItems({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return new FavoriteItemsState();
+    return FavoriteItemsState();
   }
 }
 
@@ -48,31 +50,31 @@ class FavoriteItemsState extends State<FavoriteItems> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Colors.deepPurple[200],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(40),
                       bottomLeft: Radius.circular(40),
                     )),
               ),
               Container(
-                padding: EdgeInsets.only(top: 33, left: 14),
+                padding: const EdgeInsets.only(top: 33, left: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 100),
+                padding: const EdgeInsets.only(top: 100),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
-                      'My Favorites' ?? '--',
+                      'My Favorites',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 35,
@@ -94,7 +96,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
           ),
           Expanded(
             child: ListView.builder(
-                padding: EdgeInsets.only(top: 14),
+                padding: const EdgeInsets.only(top: 14),
                 scrollDirection: Axis.vertical,
                 itemCount: _posts.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -133,8 +135,8 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                   child: Container(
                                       width: 220,
                                       height: 140,
-                                      padding:
-                                          EdgeInsets.only(top: 18, left: 10),
+                                      padding: const EdgeInsets.only(
+                                          top: 18, left: 10),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -160,7 +162,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                       4),
                                                   Text(
                                                     '${_posts[index].postTitle.substring(0, 10)}...',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: Colors.black,
                                                         fontFamily: 'Roboto',
                                                         fontSize: 16,
@@ -169,11 +171,12 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                   ),
                                                   Container(
                                                     padding:
-                                                        EdgeInsets.only(top: 6),
+                                                        const EdgeInsets.only(
+                                                            top: 6),
                                                     width: 120,
                                                     child: Text(
                                                         '${_posts[index].postShort_desc.substring(0, 25)}...',
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.black38,
                                                             fontFamily:
@@ -189,7 +192,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                             top: 15.0),
                                                     child: Text(
                                                       'Published on : ${ConvertToDate.convertToDate(_posts[index].postCreatedAt)}',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Colors.black,
                                                           fontFamily: 'Roboto',
                                                           fontSize: 10,
@@ -214,12 +217,12 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                     },
                                                     color: Colors.white,
                                                     textColor: Colors.red[300],
-                                                    child: Icon(
+                                                    child: const Icon(
                                                       Icons
                                                           .delete_forever_outlined,
                                                       size: 19,
                                                     ),
-                                                    shape: CircleBorder(),
+                                                    shape: const CircleBorder(),
                                                   ),
                                                 ],
                                               ),
@@ -235,7 +238,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(24),
                                       child: Image.network(
-                                        '${_posts[index].postImg}' ?? '--' ,
+                                        _posts[index].postImg,
                                         fit: BoxFit.cover,
                                         height: 150,
                                         width: 150,
@@ -254,7 +257,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                   );
                 }),
           ),
-          Footer(),
+          const Footer(),
         ],
       ),
     );

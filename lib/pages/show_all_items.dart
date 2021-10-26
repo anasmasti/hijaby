@@ -1,15 +1,17 @@
+// ignore_for_file: no_logic_in_create_state, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:hijaby/pages/components/footer.dart';
-import 'package:hijaby/pages/functions/convertdate.dart';
-import 'package:hijaby/pages/functions/var_to_text.dart';
+import 'package:hijaby/shared/components/footer.dart';
+import 'package:hijaby/shared/functions/convertdate.dart';
+import 'package:hijaby/shared/functions/var_to_text.dart';
 import 'package:hijaby/pages/show_item.dart';
 
 // ignore: must_be_immutable
 class ShowAllItems extends StatefulWidget {
   ShowAllItems({
-    this.posts,
-    this.title,
+    required this.posts,
+    required this.title,
   });
 
   List posts = [];
@@ -17,7 +19,7 @@ class ShowAllItems extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new ShowAllItemsState(posts, title);
+    return ShowAllItemsState(posts, title);
   }
 }
 
@@ -43,38 +45,38 @@ class ShowAllItemsState extends State<ShowAllItems> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Colors.deepPurple[200],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(40),
                       bottomLeft: Radius.circular(40),
                     )),
               ),
               Container(
-                padding: EdgeInsets.only(top: 33, left: 14),
+                padding: const EdgeInsets.only(top: 33, left: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 100),
+                padding: const EdgeInsets.only(top: 100),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'All' ?? '--',
+                    const Text(
+                      'All',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 35,
                           fontFamily: 'Roboto',
                           color: Colors.white),
                     ),
-                    Text(
+                    const Text(
                       'You can see all your favorite styles here',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -89,7 +91,7 @@ class ShowAllItemsState extends State<ShowAllItems> {
           ),
           Expanded(
             child: ListView.builder(
-                padding: EdgeInsets.only(top: 14),
+                padding: const EdgeInsets.only(top: 14),
                 scrollDirection: Axis.vertical,
                 itemCount: posts.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -127,8 +129,8 @@ class ShowAllItemsState extends State<ShowAllItems> {
                                   child: Container(
                                       width: 220,
                                       height: 140,
-                                      padding:
-                                          EdgeInsets.only(top: 18, left: 10),
+                                      padding: const EdgeInsets.only(
+                                          top: 18, left: 10),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -155,7 +157,7 @@ class ShowAllItemsState extends State<ShowAllItems> {
                                                       4),
                                                   Text(
                                                     '${posts[index]['title'].substring(0, 10)}...',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: Colors.black,
                                                         fontFamily: 'Roboto',
                                                         fontSize: 16,
@@ -164,11 +166,12 @@ class ShowAllItemsState extends State<ShowAllItems> {
                                                   ),
                                                   Container(
                                                     padding:
-                                                        EdgeInsets.only(top: 6),
+                                                        const EdgeInsets.only(
+                                                            top: 6),
                                                     width: 120,
                                                     child: Text(
                                                         '${posts[index]["short_desc"].substring(0, 25)}...',
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.black38,
                                                             fontFamily:
@@ -184,7 +187,7 @@ class ShowAllItemsState extends State<ShowAllItems> {
                                                             top: 15.0),
                                                     child: Text(
                                                       'Published on : ${ConvertToDate.convertToDate(posts[index]["createdAt"])}',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Colors.black,
                                                           fontFamily: 'Roboto',
                                                           fontSize: 10,
@@ -225,7 +228,7 @@ class ShowAllItemsState extends State<ShowAllItems> {
                   );
                 }),
           ),
-          Footer(),
+          const Footer(),
         ],
       ),
     );

@@ -1,27 +1,29 @@
+// ignore_for_file: no_logic_in_create_state, prefer_is_empty
+
 import 'package:flutter/material.dart';
-import 'package:hijaby/data/fetchData.dart';
-import 'package:hijaby/model/post.dart';
-import 'package:hijaby/data/databaseLocale.dart';
-import 'package:hijaby/pages/components/alert_dialog.dart';
-import 'package:hijaby/pages/components/footer.dart';
-import 'package:hijaby/pages/functions/convertdate.dart';
-import 'package:hijaby/pages/functions/var_to_text.dart';
+import 'package:hijaby/data/fetch_data.dart';
+import 'package:hijaby/shared/components/alert_dialog.dart';
+import 'package:hijaby/shared/components/footer.dart';
+import 'package:hijaby/shared/functions/convertdate.dart';
+import 'package:hijaby/shared/functions/var_to_text.dart';
 
 // ignore: must_be_immutable
 class ShowItem extends StatefulWidget {
   ShowItem(
-      {this.index,
-      this.id,
-      this.title,
-      this.img,
-      this.desc,
+      {Key? key,
+      required this.index,
+      required this.id,
+      required this.title,
+      required this.img,
+      required this.desc,
       // ignore: non_constant_identifier_names
-      this.short_title,
+      required this.short_title,
       // ignore: non_constant_identifier_names
-      this.short_desc,
-      this.season,
-      this.createdAt,
-      this.nouveau});
+      required this.short_desc,
+      required this.season,
+      required this.createdAt,
+      required this.nouveau})
+      : super(key: key);
 
   String id;
   String img;
@@ -38,8 +40,8 @@ class ShowItem extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new ShowItemState(index, id, title, img, desc, short_title,
-        short_desc, season, createdAt, nouveau);
+    return ShowItemState(index, id, title, img, desc, short_title, short_desc,
+        season, createdAt, nouveau);
   }
 }
 
@@ -69,7 +71,7 @@ class ShowItemState extends State<ShowItem> {
   final String createdAt;
   final bool nouveau;
   // ignore: non_constant_identifier_names
-  List _10Posts = [];
+  final List _10Posts = [];
 
   @override
   void initState() {
@@ -83,17 +85,6 @@ class ShowItemState extends State<ShowItem> {
 
   @override
   Widget build(BuildContext context) {
-    final post = Post(
-      postId: '$id',
-      postTitle: "$title",
-      postImg: '$img',
-      postDesc: '$desc',
-      postShort_title: '$short_title',
-      postShort_desc: '$short_desc',
-      postSeason: '$season',
-      postCreatedAt: '$createdAt',
-      postNouveau: 1,
-    );
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
       body: Column(
@@ -104,21 +95,21 @@ class ShowItemState extends State<ShowItem> {
               Hero(
                 tag: 'item_destination$index',
                 child: ClipRRect(
-                  borderRadius: new BorderRadius.only(
-                    bottomLeft: const Radius.circular(40.0),
-                    bottomRight: const Radius.circular(40.0),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(40.0),
+                    bottomRight: Radius.circular(40.0),
                   ),
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                               color: Colors.black26,
                               blurRadius: 5,
                               offset: Offset(0, 5))
                         ]),
                     child: Image.network(
-                      '$img',
+                      img,
                       fit: BoxFit.cover,
                       height: 290,
                       width: MediaQuery.of(context).size.width,
@@ -129,19 +120,19 @@ class ShowItemState extends State<ShowItem> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 33, left: 14, right: 14),
+                padding: const EdgeInsets.only(top: 33, left: 14, right: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
                     IconButton(
                       onPressed: () async {
                         try {
-                          await DatabaseLocale.database.insertPost(post);
+                          // await DatabaseLocale.database.insertPost(post);
                           return MyAlertDialog.displayAlertDialog(
                               context,
                               'Done!',
@@ -155,29 +146,29 @@ class ShowItemState extends State<ShowItem> {
                               0xFFE57373);
                         }
                       },
-                      icon: Icon(Icons.favorite_outline),
+                      icon: const Icon(Icons.favorite_outline),
                       color: Colors.white,
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 115, left: 20, right: 24),
+                padding: const EdgeInsets.only(top: 115, left: 20, right: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   seasonTextToWigdet(season,14,6,14,0,6),
+                    seasonTextToWigdet(season, 14, 6, 14, 0, 6),
                     Text(
-                      '$title' ?? '--',
-                      style: TextStyle(
+                      title,
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                           fontFamily: 'Roboto',
                           color: Colors.white),
                     ),
                     Text(
-                      '$short_desc',
-                      style: TextStyle(
+                      short_desc,
+                      style: const TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 15,
                           fontFamily: 'Roboto',
@@ -190,14 +181,14 @@ class ShowItemState extends State<ShowItem> {
                         children: [
                           Text(
                             'Published on : ${ConvertToDate.convertToDate(createdAt)}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontFamily: 'Roboto',
                                 fontSize: 11,
                                 color: Colors.white),
                           ),
                           Container(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 top: 3, bottom: 3, left: 24, right: 24),
                             decoration: BoxDecoration(
                               color: Colors.green[300],
@@ -205,7 +196,7 @@ class ShowItemState extends State<ShowItem> {
                             ),
                             child: Text(
                               '${boolNewToText(nouveau)}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontFamily: 'Roboto',
                                   fontSize: 14,
@@ -222,14 +213,14 @@ class ShowItemState extends State<ShowItem> {
           ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.only(top: 14),
+              padding: const EdgeInsets.only(top: 14),
               children: [
                 Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 12.0, right: 14, top: 30, bottom: 14),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           'Model',
                           style: TextStyle(
@@ -243,7 +234,11 @@ class ShowItemState extends State<ShowItem> {
                     children: [
                       InteractiveViewer(
                         child: Image.network(
+<<<<<<< HEAD
                           '$img',
+=======
+                          img,
+>>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
                           fit: BoxFit.cover,
                           height: 320,
                           width: MediaQuery.of(context).size.width,
@@ -260,7 +255,7 @@ class ShowItemState extends State<ShowItem> {
                     children: [
                       Text(
                         short_title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             fontFamily: 'Roboto',
                             fontSize: 24,
@@ -268,7 +263,7 @@ class ShowItemState extends State<ShowItem> {
                       ),
                       Text(
                         desc,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             fontFamily: 'Roboto',
                             fontSize: 17,
@@ -280,12 +275,12 @@ class ShowItemState extends State<ShowItem> {
                 Column(
                   children: [
                     Padding(
-                        padding:
-                            EdgeInsets.only(left: 12.0, right: 14, top: 30),
+                        padding: const EdgeInsets.only(
+                            left: 12.0, right: 14, top: 30),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'For you',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 17),
@@ -299,21 +294,21 @@ class ShowItemState extends State<ShowItem> {
                             )
                           ],
                         )),
-                    Container(
+                    SizedBox(
                       height: 235,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: _10Posts.length,
                           // ignore: missing_return
                           itemBuilder: (BuildContext context, int index) {
-                            if (_10Posts.length == 0 || _10Posts.length < 0) {
+                            if (_10Posts.isEmpty || _10Posts.length < 0) {
                               return Center(
                                   child: CircularProgressIndicator(
                                 backgroundColor: Colors.deepPurple[200],
                               ));
-                            } else if (_10Posts.length > 0) {
+                            } else if (_10Posts.isNotEmpty) {
                               return Container(
-                                margin: EdgeInsets.all(10),
+                                margin: const EdgeInsets.all(10),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -352,7 +347,7 @@ class ShowItemState extends State<ShowItem> {
                                         child: Container(
                                           width: 150,
                                           height: 80,
-                                          padding: EdgeInsets.only(
+                                          padding: const EdgeInsets.only(
                                               top: 23, left: 10),
                                           decoration: BoxDecoration(
                                               color: Colors.white,
@@ -366,7 +361,7 @@ class ShowItemState extends State<ShowItem> {
                                                 '${_10Posts[index]['title']}',
                                                 textDirection:
                                                     TextDirection.ltr,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontFamily: 'Roboto',
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -375,7 +370,7 @@ class ShowItemState extends State<ShowItem> {
                                                 '${_10Posts[index]['short_title']}',
                                                 textDirection:
                                                     TextDirection.ltr,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 9,
                                                     fontFamily: 'Roboto',
                                                     color: Colors.black,
@@ -390,11 +385,12 @@ class ShowItemState extends State<ShowItem> {
                                                       MainAxisAlignment.start,
                                                   children: [
                                                     Container(
-                                                      padding: EdgeInsets.only(
-                                                          top: 3,
-                                                          bottom: 3,
-                                                          left: 12,
-                                                          right: 12),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 3,
+                                                              bottom: 3,
+                                                              left: 12,
+                                                              right: 12),
                                                       decoration: BoxDecoration(
                                                         color:
                                                             Colors.green[300],
@@ -404,7 +400,7 @@ class ShowItemState extends State<ShowItem> {
                                                       ),
                                                       child: Text(
                                                         '${boolNewToText(_10Posts[index]['new'])}',
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w900,
                                                             fontFamily:
@@ -414,7 +410,14 @@ class ShowItemState extends State<ShowItem> {
                                                                 Colors.white),
                                                       ),
                                                     ),
-                                                   seasonTextToWigdet(_10Posts[index]['season']["name"],12,3,9,0,0),
+                                                    seasonTextToWigdet(
+                                                        _10Posts[index]
+                                                            ['season']["name"],
+                                                        12,
+                                                        3,
+                                                        9,
+                                                        0,
+                                                        0),
                                                   ],
                                                 ),
                                               ),
@@ -432,7 +435,7 @@ class ShowItemState extends State<ShowItem> {
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(24),
-                                                  boxShadow: [
+                                                  boxShadow: const [
                                                     BoxShadow(
                                                         color: Colors.black26,
                                                         blurRadius: 5,
@@ -457,20 +460,21 @@ class ShowItemState extends State<ShowItem> {
                                 ),
                               );
                             }
+                            return const Text('loading...');
                           }),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 Column(
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(left: 12.0),
+                        padding: const EdgeInsets.only(left: 12.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: const [
                             Text(
                               'Favorises',
                               style: TextStyle(
@@ -484,6 +488,7 @@ class ShowItemState extends State<ShowItem> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/favorite');
@@ -491,14 +496,14 @@ class ShowItemState extends State<ShowItem> {
                             color: Colors.deepPurple[200],
                             textColor: Colors.white,
                             child: Column(
-                              children: [
+                              children: const [
                                 Icon(
                                   Icons.favorite_outline,
                                   size: 29,
                                 ),
                               ],
                             ),
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 top: 4, bottom: 4, left: 9, right: 9),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14)),
@@ -508,7 +513,7 @@ class ShowItemState extends State<ShowItem> {
                     ),
                   ],
                 ),
-                Footer(),
+                const Footer(),
               ],
             ),
           ),

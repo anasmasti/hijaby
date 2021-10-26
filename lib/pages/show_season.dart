@@ -1,13 +1,34 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:hijaby/data/fetchData.dart';
 import 'package:hijaby/pages/components/footer.dart';
 import 'package:hijaby/pages/functions/convertdate.dart';
 import 'package:hijaby/pages/functions/var_to_text.dart';
+=======
+// ignore_for_file: no_logic_in_create_state
+
+import 'package:flutter/material.dart';
+import 'package:hijaby/data/fetch_data.dart';
+import 'package:hijaby/shared/components/footer.dart';
+import 'package:hijaby/shared/functions/convertdate.dart';
+import 'package:hijaby/shared/functions/var_to_text.dart';
+>>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
 import 'package:hijaby/pages/show_item.dart';
 
 // ignore: must_be_immutable
 class ShowSeason extends StatefulWidget {
+<<<<<<< HEAD
   ShowSeason({this.index, this.name, this.desc, this.img, this.id});
+=======
+  ShowSeason(
+      {Key? key,
+      required this.index,
+      required this.name,
+      required this.desc,
+      required this.img,
+      required this.id})
+      : super(key: key);
+>>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
   String id;
   String desc;
   String img;
@@ -16,7 +37,11 @@ class ShowSeason extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
+<<<<<<< HEAD
     return new ShowSeasonState(index, name, desc, img, id);
+=======
+    return ShowSeasonState(index, name, desc, img, id);
+>>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
   }
 }
 
@@ -52,21 +77,21 @@ class ShowSeasonState extends State<ShowSeason> {
               Hero(
                 tag: 'des$index',
                 child: ClipRRect(
-                  borderRadius: new BorderRadius.only(
-                    bottomLeft: const Radius.circular(40.0),
-                    bottomRight: const Radius.circular(40.0),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(40.0),
+                    bottomRight: Radius.circular(40.0),
                   ),
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                               color: Colors.black26,
                               blurRadius: 5,
                               offset: Offset(0, 5))
                         ]),
                     child: Image.network(
-                      '$img',
+                      img,
                       fit: BoxFit.cover,
                       height: 320,
                       width: MediaQuery.of(context).size.width,
@@ -77,33 +102,33 @@ class ShowSeasonState extends State<ShowSeason> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 33, left: 14, right: 14),
+                padding: const EdgeInsets.only(top: 33, left: 14, right: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 170, left: 20, right: 14),
+                padding: const EdgeInsets.only(top: 170, left: 20, right: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '$name',
-                      style: TextStyle(
+                      name,
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                           color: Colors.white),
                     ),
                     Text(
                       desc,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 15,
                           color: Colors.white70),
@@ -115,7 +140,7 @@ class ShowSeasonState extends State<ShowSeason> {
           ),
           Expanded(
             child: ListView.builder(
-                padding: EdgeInsets.only(top: 14),
+                padding: const EdgeInsets.only(top: 14),
                 scrollDirection: Axis.vertical,
                 itemCount: posts.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -153,8 +178,8 @@ class ShowSeasonState extends State<ShowSeason> {
                                   child: Container(
                                       width: 220,
                                       height: 140,
-                                      padding:
-                                          EdgeInsets.only(top: 18, left: 10),
+                                      padding: const EdgeInsets.only(
+                                          top: 18, left: 10),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -181,7 +206,7 @@ class ShowSeasonState extends State<ShowSeason> {
                                                       4),
                                                   Text(
                                                     '${posts[index]['title'].substring(0, 10)}...',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: Colors.black,
                                                         fontFamily: 'Roboto',
                                                         fontSize: 16,
@@ -190,11 +215,12 @@ class ShowSeasonState extends State<ShowSeason> {
                                                   ),
                                                   Container(
                                                     padding:
-                                                        EdgeInsets.only(top: 6),
+                                                        const EdgeInsets.only(
+                                                            top: 6),
                                                     width: 120,
                                                     child: Text(
                                                         '${posts[index]["short_desc"].substring(0, 25)}...',
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.black38,
                                                             fontFamily:
@@ -210,7 +236,7 @@ class ShowSeasonState extends State<ShowSeason> {
                                                             top: 15.0),
                                                     child: Text(
                                                       'Published on : ${ConvertToDate.convertToDate(posts[index]["createdAt"])}',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Colors.black,
                                                           fontFamily: 'Roboto',
                                                           fontSize: 10,
@@ -251,7 +277,7 @@ class ShowSeasonState extends State<ShowSeason> {
                   );
                 }),
           ),
-          Footer(),
+          const Footer(),
         ],
       ),
     );

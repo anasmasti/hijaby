@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     package="com.masti.hijaby">
+=======
+    package="com.masti.hijaby.hijaby">
+>>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
