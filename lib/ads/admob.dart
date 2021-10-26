@@ -1,17 +1,28 @@
-// ignore: import_of_legacy_library_into_null_safe
-// import 'package:firebase_admob/firebase_admob.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// class Admob {
-//   static BannerAd getBanner() {
-//     return BannerAd(
-//       adUnitId: 'ca-app-pub-7266395079327700/5606288272',
-//       size: AdSize.fullBanner,
-//     );
-//   }
+class Admob {
+  static BannerAd getBanner() {
+    return BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      size: AdSize.fullBanner,
+      request: const AdRequest(),
+      listener: const BannerAdListener(),
+    );
+  }
 
 //   static InterstitialAd getInterstitial() {
-//     return InterstitialAd(
-//       adUnitId: 'ca-app-pub-7266395079327700/8645151289',
-//     );
+//     return
+// InterstitialAd.load(
+//   adUnitId: '<ad unit id>',
+//   request: AdRequest(),
+//   adLoadCallback: InterstitialAdLoadCallback(
+//     onAdLoaded: (InterstitialAd ad) {
+//       // Keep a reference to the ad so you can show it later.
+//       this._interstitialAd = ad;
+//     },
+//     onAdFailedToLoad: (LoadAdError error) {
+//       print('InterstitialAd failed to load: $error');
+//     },
+//   ));
 //   }
-// }
+}

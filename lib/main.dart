@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hijaby/pages/favorite_items.dart';
 import 'package:hijaby/pages/privacy.dart';
 import 'package:hijaby/pages/splash_screen.dart';
@@ -10,6 +11,9 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light));
+
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
 
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'Raleway'),

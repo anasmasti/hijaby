@@ -1,5 +1,6 @@
-// import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hijaby/ads/admob.dart';
 import 'package:hijaby/data/fetch_data.dart';
 import 'package:hijaby/pages/show_all_items.dart';
 import 'package:hijaby/pages/show_item.dart';
@@ -25,7 +26,7 @@ class HomeState extends State<Home> {
   final List _10Posts = [];
   final List _newPosts = [];
   final List _seasons = [];
-  // late BannerAd _bannerAd;
+  late BannerAd _bannerAd;
 
   @override
   void initState() {
@@ -34,8 +35,8 @@ class HomeState extends State<Home> {
     // FirebaseAdMob.instance
     //     .initialize(appId: "ca-app-pub-7266395079327700~2959943635");
 
-    // _bannerAd = Admob.getBanner();
-    // _bannerAd.load();
+    _bannerAd = Admob.getBanner();
+    _bannerAd.load();
 
     // Timer(const Duration(seconds: 3), () {
     //   _bannerAd.show();
@@ -74,13 +75,20 @@ class HomeState extends State<Home> {
   void dispose() {
     super.dispose();
     CheckConnexion.checkConnexion(context).cancel();
-    // _bannerAd.dispose();
+    _bannerAd.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final AdWidget adWidget = AdWidget(ad: _bannerAd);
+    final SizedBox adContainer = SizedBox(
+      child: adWidget,
+      width: _bannerAd.size.width.toDouble(),
+      height: _bannerAd.size.height.toDouble(),
+    );
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
+      bottomNavigationBar: adContainer,
       body: Column(
         children: [
           Container(

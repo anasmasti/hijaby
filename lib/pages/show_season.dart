@@ -123,7 +123,7 @@ class ShowSeasonState extends State<ShowSeason> {
             ],
           ),
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height + 600,
               child: ListView.builder(
                   padding: const EdgeInsets.only(top: 14),
