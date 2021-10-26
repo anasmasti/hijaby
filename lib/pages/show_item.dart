@@ -234,11 +234,7 @@ class ShowItemState extends State<ShowItem> {
                     children: [
                       InteractiveViewer(
                         child: Image.network(
-<<<<<<< HEAD
-                          '$img',
-=======
                           img,
->>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
                           fit: BoxFit.cover,
                           height: 320,
                           width: MediaQuery.of(context).size.width,

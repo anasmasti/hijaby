@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import 'package:flutter/material.dart';
-import 'package:hijaby/data/fetchData.dart';
-import 'package:hijaby/pages/components/footer.dart';
-import 'package:hijaby/pages/functions/convertdate.dart';
-import 'package:hijaby/pages/functions/var_to_text.dart';
-=======
 // ignore_for_file: no_logic_in_create_state
 
 import 'package:flutter/material.dart';
@@ -12,14 +5,10 @@ import 'package:hijaby/data/fetch_data.dart';
 import 'package:hijaby/shared/components/footer.dart';
 import 'package:hijaby/shared/functions/convertdate.dart';
 import 'package:hijaby/shared/functions/var_to_text.dart';
->>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
 import 'package:hijaby/pages/show_item.dart';
 
 // ignore: must_be_immutable
 class ShowSeason extends StatefulWidget {
-<<<<<<< HEAD
-  ShowSeason({this.index, this.name, this.desc, this.img, this.id});
-=======
   ShowSeason(
       {Key? key,
       required this.index,
@@ -28,7 +17,6 @@ class ShowSeason extends StatefulWidget {
       required this.img,
       required this.id})
       : super(key: key);
->>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
   String id;
   String desc;
   String img;
@@ -37,11 +25,7 @@ class ShowSeason extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-<<<<<<< HEAD
-    return new ShowSeasonState(index, name, desc, img, id);
-=======
     return ShowSeasonState(index, name, desc, img, id);
->>>>>>> 6a310e56ef7e692316226179d705f35051c792d6
   }
 }
 
