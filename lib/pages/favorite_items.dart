@@ -43,10 +43,10 @@ class FavoriteItemsState extends State<FavoriteItems> {
       body: Column(
         children: [
           Stack(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topLeft,
             children: [
               Container(
-                height: 200,
+                height: 130,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Colors.deepPurple[200],
@@ -56,7 +56,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                     )),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 33, left: 14),
+                padding: const EdgeInsets.only(top: 13, left: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -69,7 +69,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 100),
+                padding: const EdgeInsets.only(top: 55, left: 40),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
@@ -77,7 +77,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                       'My Favorites',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 35,
+                          fontSize: 30,
                           fontFamily: 'Roboto',
                           color: Colors.white),
                     ),
@@ -85,7 +85,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                       'You can see all your favorite styles here',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontSize: 18,
+                          fontSize: 15,
                           fontFamily: 'Roboto',
                           color: Colors.white),
                     )

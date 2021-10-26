@@ -62,8 +62,8 @@ class ShowSeasonState extends State<ShowSeason> {
                 tag: 'des$index',
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(40.0),
-                    bottomRight: Radius.circular(40.0),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
                   ),
                   child: Container(
                     decoration: BoxDecoration(
@@ -77,7 +77,7 @@ class ShowSeasonState extends State<ShowSeason> {
                     child: Image.network(
                       img,
                       fit: BoxFit.cover,
-                      height: 320,
+                      height: 180,
                       width: MediaQuery.of(context).size.width,
                       color: Colors.black.withOpacity(.4),
                       colorBlendMode: BlendMode.multiply,
@@ -86,7 +86,7 @@ class ShowSeasonState extends State<ShowSeason> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 33, left: 14, right: 14),
+                padding: const EdgeInsets.only(top: 13, left: 14, right: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -99,7 +99,7 @@ class ShowSeasonState extends State<ShowSeason> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 170, left: 20, right: 14),
+                padding: const EdgeInsets.only(top: 65, left: 20, right: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -107,7 +107,7 @@ class ShowSeasonState extends State<ShowSeason> {
                       name,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 40,
+                          fontSize: 30,
                           color: Colors.white),
                     ),
                     Text(
@@ -123,143 +123,151 @@ class ShowSeasonState extends State<ShowSeason> {
             ],
           ),
           Expanded(
-            child: ListView.builder(
-                padding: const EdgeInsets.only(top: 14),
-                scrollDirection: Axis.vertical,
-                itemCount: posts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ShowItem(
-                                        index: index.toString(),
-                                        title: posts[index]['title'].toString(),
-                                        img: posts[index]['img'].toString(),
-                                        id: posts[index]['_id'].toString(),
-                                        desc: posts[index]['desc'].toString(),
-                                        short_title: posts[index]['short_title']
-                                            .toString(),
-                                        short_desc: posts[index]['short_desc']
-                                            .toString(),
-                                        season: posts[index]['season']['name']
-                                            .toString(),
-                                        createdAt: posts[index]['createdAt'],
-                                        nouveau: posts[index]['new'],
-                                      )));
-                        },
-                        child: Row(
-                          children: [
-                            Stack(
-                              alignment: Alignment.topLeft,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 155.0, top: 15),
-                                  child: Container(
-                                      width: 220,
-                                      height: 140,
-                                      padding: const EdgeInsets.only(
-                                          top: 18, left: 10),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  seasonTextToWigdet(
-                                                      posts[index]['season']
-                                                          ["name"],
-                                                      12,
-                                                      3,
-                                                      9,
-                                                      0,
-                                                      4),
-                                                  Text(
-                                                    '${posts[index]['title'].substring(0, 10)}...',
-                                                    style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontFamily: 'Roboto',
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w900),
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 6),
-                                                    width: 120,
-                                                    child: Text(
-                                                        '${posts[index]["short_desc"].substring(0, 25)}...',
-                                                        style: const TextStyle(
-                                                            color:
-                                                                Colors.black38,
-                                                            fontFamily:
-                                                                'Roboto',
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal)),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 15.0),
-                                                    child: Text(
-                                                      'Published on : ${ConvertToDate.convertToDate(posts[index]["createdAt"])}',
+            child: Container(
+              height: MediaQuery.of(context).size.height + 600,
+              child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 14),
+                  scrollDirection: Axis.vertical,
+                  itemCount: posts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ShowItem(
+                                          index: index.toString(),
+                                          title:
+                                              posts[index]['title'].toString(),
+                                          img: posts[index]['img'].toString(),
+                                          id: posts[index]['_id'].toString(),
+                                          desc: posts[index]['desc'].toString(),
+                                          short_title: posts[index]
+                                                  ['short_title']
+                                              .toString(),
+                                          short_desc: posts[index]['short_desc']
+                                              .toString(),
+                                          season: posts[index]['season']['name']
+                                              .toString(),
+                                          createdAt: posts[index]['createdAt'],
+                                          nouveau: posts[index]['new'],
+                                        )));
+                          },
+                          child: Row(
+                            children: [
+                              Stack(
+                                alignment: Alignment.topLeft,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 155.0, top: 15),
+                                    child: Container(
+                                        width: 220,
+                                        height: 140,
+                                        padding: const EdgeInsets.only(
+                                            top: 18, left: 10),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    seasonTextToWigdet(
+                                                        posts[index]['season']
+                                                            ["name"],
+                                                        12,
+                                                        3,
+                                                        9,
+                                                        0,
+                                                        4),
+                                                    Text(
+                                                      '${posts[index]['title'].substring(0, 10)}...',
                                                       style: const TextStyle(
                                                           color: Colors.black,
                                                           fontFamily: 'Roboto',
-                                                          fontSize: 10,
+                                                          fontSize: 16,
                                                           fontWeight:
-                                                              FontWeight.w200),
+                                                              FontWeight.w900),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Hero(
-                                    tag: 'item_destination$index',
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(24),
-                                      child: Image.network(
-                                        '${posts[index]["img"]}',
-                                        fit: BoxFit.cover,
-                                        height: 150,
-                                        width: 150,
-                                        color: Colors.black.withOpacity(.2),
-                                        colorBlendMode: BlendMode.multiply,
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 6),
+                                                      width: 120,
+                                                      child: Text(
+                                                          '${posts[index]["short_desc"].substring(0, 25)}...',
+                                                          style: const TextStyle(
+                                                              color: Colors
+                                                                  .black38,
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal)),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15.0),
+                                                      child: Text(
+                                                        'Published on : ${ConvertToDate.convertToDate(posts[index]["createdAt"])}',
+                                                        style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w200),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Hero(
+                                      tag: 'item_destination$index',
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(24),
+                                        child: Image.network(
+                                          '${posts[index]["img"]}',
+                                          fit: BoxFit.cover,
+                                          height: 150,
+                                          width: 150,
+                                          color: Colors.black.withOpacity(.2),
+                                          colorBlendMode: BlendMode.multiply,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }),
+                      ],
+                    );
+                  }),
+            ),
           ),
           const Footer(),
         ],

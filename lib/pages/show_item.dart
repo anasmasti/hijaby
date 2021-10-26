@@ -253,7 +253,7 @@ class ShowItemState extends State<ShowItem> {
                               child: Image.network(
                                 img,
                                 fit: BoxFit.cover,
-                                height: 320,
+                                height: 620,
                                 width: MediaQuery.of(context).size.width,
                               ),
                             ),
