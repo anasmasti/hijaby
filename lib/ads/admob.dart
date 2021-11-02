@@ -9,20 +9,4 @@ class Admob {
       listener: const BannerAdListener(),
     );
   }
-
-//   static InterstitialAd getInterstitial() {
-//     return
-// InterstitialAd.load(
-//   adUnitId: '<ad unit id>',
-//   request: AdRequest(),
-//   adLoadCallback: InterstitialAdLoadCallback(
-//     onAdLoaded: (InterstitialAd ad) {
-//       // Keep a reference to the ad so you can show it later.
-//       this._interstitialAd = ad;
-//     },
-//     onAdFailedToLoad: (LoadAdError error) {
-//       print('InterstitialAd failed to load: $error');
-//     },
-//   ));
-//   }
 }

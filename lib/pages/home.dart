@@ -32,19 +32,12 @@ class HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    // FirebaseAdMob.instance
-    //     .initialize(appId: "ca-app-pub-7266395079327700~2959943635");
-
     _bannerAd = Admob.getBanner();
     _bannerAd.load();
 
-    // Timer(const Duration(seconds: 3), () {
-    //   _bannerAd.show();
-    // });
-
-    // setState(() {
-    //   CheckConnexion.checkConnexion(context);
-    // });
+    setState(() {
+      CheckConnexion.checkConnexion(context);
+    });
 
     FetchData().getPosts(context).then((value) {
       setState(() {

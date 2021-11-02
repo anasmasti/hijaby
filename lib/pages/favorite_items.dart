@@ -206,6 +206,7 @@ class FavoriteItemsState extends State<FavoriteItems> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
+                                                  // ignore: deprecated_member_use
                                                   FlatButton(
                                                     onPressed: () async {
                                                       String myId =

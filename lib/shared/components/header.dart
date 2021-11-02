@@ -1,9 +1,8 @@
 // import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:hijaby/ads/admob.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// ignore: must_be_immutable
 class Header extends StatefulWidget {
   const Header({key}) : super(key: key);
 
@@ -14,19 +13,32 @@ class Header extends StatefulWidget {
 }
 
 class HeaderState extends State<Header> {
-  // late InterstitialAd _interstitialAd;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _interstitialAd = Admob.getInterstitial();
-  //   _interstitialAd.load();
-  // }
+  late InterstitialAd _interstitialAd;
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _interstitialAd.dispose();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    // Admob.getInterstitial(_interstitialAd);
+    InterstitialAd.load(
+        adUnitId: 'ca-app-pub-3940256099942544/8691691433',
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (InterstitialAd ad) {
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            // ignore: avoid_print
+            print('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +58,9 @@ class HeaderState extends State<Header> {
           RaisedButton(
             onPressed: () {
               Navigator.pushNamed(context, '/favorite');
-              // _interstitialAd.show().then((value) async {
-              //   await Navigator.pushNamed(context, '/favorite');
-              // });
+              _interstitialAd.show().then((_) async {
+                await Navigator.pushNamed(context, '/favorite');
+              });
             },
             color: Colors.deepPurple[200],
             textColor: Colors.white,
