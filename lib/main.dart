@@ -15,31 +15,29 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
 
-  runApp(MaterialApp(
-    theme: ThemeData(fontFamily: 'Raleway'),
-    initialRoute: '/splash_screen',
-    routes: {
-      '/home': (context) => const Home(),
-      '/season': (context) => ShowSeason(
-            desc: '',
-            id: '',
-            img: '',
-            index: '',
-            name: '',
-          ),
-      '/splash_screen': (context) => const SplashScreen(),
-      '/favorite': (context) => const FavoriteItems(),
-      '/privacy': (context) => const Privacy(),
-    },
-    home: const MyApp(),
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const SplashScreen();
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        theme: ThemeData(fontFamily: 'Raleway'),
+        initialRoute: '/splash_screen',
+        routes: {
+          '/home': (context) => const Home(),
+          '/season': (context) => ShowSeason(
+                desc: '',
+                id: '',
+                img: '',
+                index: '',
+                name: '',
+              ),
+          '/splash_screen': (context) => const SplashScreen(),
+          '/favorite': (context) => const FavoriteItems(),
+          '/privacy': (context) => const Privacy(),
+        },
+        home: const SplashScreen(),
+      );
 }
