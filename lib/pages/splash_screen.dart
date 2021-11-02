@@ -38,6 +38,7 @@ class SplashScreenStat extends State<SplashScreen> {
                   decoration: TextDecoration.none,
                   fontStyle: FontStyle.normal,
                   fontFamily: 'Raleway',
+                  color: Colors.deepPurple,
                 ),
                 speed: const Duration(milliseconds: 2000),
               ),
