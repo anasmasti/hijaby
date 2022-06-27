@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        theme: ThemeData(fontFamily: 'Raleway'),
+        theme: ThemeData(fontFamily: 'Railway'),
         initialRoute: '/splash_screen',
         routes: {
           '/home': (context) => const Home(),

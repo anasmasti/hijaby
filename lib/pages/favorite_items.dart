@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:hijaby/data/database_locale.dart';
 import 'package:hijaby/model/post.dart';

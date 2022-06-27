@@ -1,6 +1,5 @@
 // ignore_for_file: no_logic_in_create_state, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:hijaby/shared/components/footer.dart';
 import 'package:hijaby/shared/functions/convertdate.dart';
