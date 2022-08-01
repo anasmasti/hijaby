@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hijaby/data/database_locale.dart';
 import 'package:hijaby/model/post.dart';
 import 'package:hijaby/shared/components/footer.dart';
 import 'package:hijaby/shared/functions/convertdate.dart';
 import 'package:hijaby/shared/functions/var_to_text.dart';
 import 'package:hijaby/pages/show_item.dart';
+
+import '../ads/admob.dart';
 
 // ignore: must_be_immutable
 class FavoriteItems extends StatefulWidget {
@@ -18,6 +21,7 @@ class FavoriteItems extends StatefulWidget {
 
 class FavoriteItemsState extends State<FavoriteItems> {
   List<Post> _posts = [];
+  late BannerAd _bannerAd;
 
   getFavoriteItems() async {
     List<Post> mydata = [];
@@ -33,12 +37,23 @@ class FavoriteItemsState extends State<FavoriteItems> {
     super.initState();
 
     getFavoriteItems();
+
+    _bannerAd = Admob.getBanner();
+    _bannerAd.load();
   }
 
   @override
   Widget build(BuildContext context) {
+    final AdWidget adWidget = AdWidget(ad: _bannerAd);
+    final SizedBox adContainer = SizedBox(
+      child: adWidget,
+      width: _bannerAd.size.width.toDouble(),
+      height: _bannerAd.size.height.toDouble(),
+    );
+
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
+      bottomNavigationBar: adContainer,
       body: Column(
         children: [
           Stack(

@@ -1,10 +1,13 @@
 // ignore_for_file: no_logic_in_create_state, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hijaby/shared/components/footer.dart';
 import 'package:hijaby/shared/functions/convertdate.dart';
 import 'package:hijaby/shared/functions/var_to_text.dart';
 import 'package:hijaby/pages/show_item.dart';
+
+import '../ads/admob.dart';
 
 // ignore: must_be_immutable
 class ShowAllItems extends StatefulWidget {
@@ -25,15 +28,33 @@ class ShowAllItems extends StatefulWidget {
 class ShowAllItemsState extends State<ShowAllItems> {
   List posts = [];
   String title = '';
+  late BannerAd _bannerAd;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _bannerAd = Admob.getBanner();
+    _bannerAd.load();
+  }
 
   ShowAllItemsState(
     this.posts,
     this.title,
   );
+
   @override
   Widget build(BuildContext context) {
+    final AdWidget adWidget = AdWidget(ad: _bannerAd);
+    final SizedBox adContainer = SizedBox(
+      child: adWidget,
+      width: _bannerAd.size.width.toDouble(),
+      height: _bannerAd.size.height.toDouble(),
+    );
+
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
+      bottomNavigationBar: adContainer,
       body: Column(
         children: [
           Stack(

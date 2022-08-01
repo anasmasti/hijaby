@@ -1,6 +1,7 @@
 // ignore_for_file: no_logic_in_create_state, prefer_is_empty
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hijaby/data/database_locale.dart';
 import 'package:hijaby/data/fetch_data.dart';
 import 'package:hijaby/model/post.dart';
@@ -8,6 +9,8 @@ import 'package:hijaby/shared/components/alert_dialog.dart';
 import 'package:hijaby/shared/components/footer.dart';
 import 'package:hijaby/shared/functions/convertdate.dart';
 import 'package:hijaby/shared/functions/var_to_text.dart';
+
+import '../ads/admob.dart';
 
 // ignore: must_be_immutable
 class ShowItem extends StatefulWidget {
@@ -74,6 +77,7 @@ class ShowItemState extends State<ShowItem> {
   final bool nouveau;
   // ignore: non_constant_identifier_names
   final List _10Posts = [];
+  late BannerAd _bannerAd;
 
   @override
   void initState() {
@@ -83,6 +87,9 @@ class ShowItemState extends State<ShowItem> {
         _10Posts.addAll(value);
       });
     });
+
+    _bannerAd = Admob.getBanner();
+    _bannerAd.load();
   }
 
   @override
@@ -98,9 +105,16 @@ class ShowItemState extends State<ShowItem> {
       postCreatedAt: createdAt,
       postNouveau: 1,
     );
+    final AdWidget adWidget = AdWidget(ad: _bannerAd);
+    final SizedBox adContainer = SizedBox(
+      child: adWidget,
+      width: _bannerAd.size.width.toDouble(),
+      height: _bannerAd.size.height.toDouble(),
+    );
 
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade50,
+      bottomNavigationBar: adContainer,
       body: CustomScrollView(slivers: [
         SliverAppBar(
           backgroundColor: Colors.deepPurple[200],
